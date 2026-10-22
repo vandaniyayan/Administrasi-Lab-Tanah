@@ -19,6 +19,7 @@ h1 { font-family: "Times New Roman", Times, serif; font-size: 22px; margin: 0 0 
 .cols { overflow: hidden; }
 .left { float: left; width: 46%; }
 .right { float: right; width: 52%; }
+.total.biaya { background: #2f5d3a; color: #fff; }
 @media (max-width: 900px) { .left, .right { float: none; width: 100%; } .right { margin-top: 16px; } }
 
 .panel { background: #fff; border: 1px solid #cfd8d1; padding: 16px; }
@@ -41,8 +42,25 @@ table.jenis td.cek { width: 32px; text-align: center; }
 table.jenis td.jml { width: 110px; }
 table.jenis input.num { width: 100%; font: inherit; padding: 4px 6px; border: 1px solid #b9c6bc; }
 table.jenis tr.on td { background: #e3ebe4; }
+.kat { margin-bottom: 10px; border: 1px solid #cfd8d1; }
+.kat label { display: block; padding: 6px 8px; border-bottom: 1px solid #e3ebe4; cursor: pointer; font-size: 13px; }
+.kat label.on { background: #e3ebe4; }
+.abox { max-height: 420px; overflow: auto; border: 1px solid #cfd8d1; }
+table.anl { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.anl th { background: #eef1ec; color: #5d6b62; font-size: 11px; text-align: left; padding: 5px 6px; border-bottom: 1px solid #cfd8d1; }
+table.anl td { padding: 4px 6px; border-bottom: 1px solid #e3ebe4; vertical-align: middle; }
+table.anl .cek { width: 26px; text-align: center; }
+table.anl .r { text-align: right; white-space: nowrap; }
+table.anl .jm { width: 62px; }
+table.anl td.jm input { width: 52px; font: inherit; padding: 2px 4px; border: 1px solid #b9c6bc; text-align: center; }
+table.anl tr.on td { background: #e3ebe4; }
+table.anl tr.grp td { background: #2f5d3a; color: #fff; font-weight: bold; font-size: 12px; padding: 5px 6px; }
+table.anl tr.grp button { float: right; font: 11px Tahoma, Arial, sans-serif; padding: 1px 6px; border: 1px solid #fff; background: #fff; color: #2f5d3a; cursor: pointer; }
+
+.sjudul { font-weight: bold; margin: 4px 0 4px; }
+table.st td.rr, table.st th.rr { text-align: right; }
 .total { background: #e3ebe4; padding: 8px 10px; margin: 8px 0 10px; font-weight: bold; }
-.total span { float: right; }
+.total > span { float: right; }
 
 .btn { font: inherit; font-weight: bold; padding: 7px 14px; margin: 0 6px 6px 0; cursor: pointer; border: 1px solid #2f5d3a; background: #2f5d3a; color: #fff; }
 .btn.alt { background: #fff; color: #2f5d3a; }
@@ -58,12 +76,12 @@ legend { font-weight: bold; padding: 0 4px; }
 .sheet { background: #fff; color: #111; padding: 26px 30px 32px; border: 1px solid #cfd8d1; font-family: "Times New Roman", Times, serif; font-size: 14px; }
 .kop { width: 100%; border-collapse: collapse; border-bottom: 3px double #222; }
 .kop td { vertical-align: middle; padding-bottom: 8px; }
-.kop td.lg { width: 86px; }
-.logo { width: 80px; height: 80px; border: 1px dashed #999; text-align: center; font: 10px Arial, sans-serif; color: #777; line-height: 80px; overflow: hidden; }
-.logo img { width: 80px; height: 80px; }
+.kop td.lg { width: 74px; }
+.logo { width: 70px; height: 70px; border: 1px dashed #999; text-align: center; font: 10px Arial, sans-serif; color: #777; line-height: 70px; overflow: hidden; }
+.logo img { width: 70px; height: 70px; }
 .logo.ada { border: 0; }
 .kt { text-align: center; line-height: 1.25; font-weight: bold; }
-.kt .a { font-size: 14px; } .kt .b { font-size: 17px; } .kt .c { font-size: 15px; } .kt .d { font-size: 16px; }
+.kt .a { font-size: 12.5px; } .kt .b { font-size: 16px; } .kt .c { font-size: 14px; } .kt .d { font-size: 14px; }
 .kt .e { font-size: 11px; font-weight: normal; margin-top: 3px; }
 .judul { text-align: center; font-weight: bold; text-decoration: underline; margin: 18px 0 2px; font-size: 15px; }
 .nomor { text-align: center; margin-bottom: 14px; }
@@ -153,10 +171,23 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
           <textarea id="lokasi"></textarea>
           <small>Desa/Kelurahan, Kecamatan, Kabupaten; koordinat bila ada.</small>
         </div>
-        <div class="row">
-          <div class="f half"><label for="parameter">Parameter analisis</label><input id="parameter" type="text"></div>
-          <div class="f half"><label for="petugas">Petugas penerima</label><input id="petugas" type="text"></div>
+        <span class="lbl">Kategori pemohon <span class="req">*</span></span>
+        <div class="kat" id="katBox">
+          <label><input type="radio" name="kat" id="kat-A" value="A"> <b>A</b> &ndash; Mahasiswa &amp; Dosen S1, S2, S3 Konsentrasi Tanah FP Unud</label>
+          <label><input type="radio" name="kat" id="kat-B" value="B"> <b>B</b> &ndash; Mahasiswa &amp; Dosen S1, S2, S3 di luar Konsentrasi Tanah &amp; Lingkungan</label>
+          <label><input type="radio" name="kat" id="kat-C" value="C"> <b>C</b> &ndash; Umum</label>
         </div>
+
+        <span class="lbl">Analisis yang diminta</span>
+        <div class="abox">
+          <table class="anl" id="tblAnl">
+            <thead><tr><th class="cek"></th><th>Analisis</th><th class="r">Harga/sampel</th><th class="jm">Jml sampel</th><th class="r">Subtotal</th></tr></thead>
+            <tbody id="anlBody"></tbody>
+          </table>
+        </div>
+        <div class="total biaya">Total biaya analisis <span>Rp <span id="totBiaya">0</span></span></div>
+
+        <div class="f"><label for="petugas">Petugas penerima</label><input id="petugas" type="text"></div>
         <div class="f"><label for="catatan">Catatan kondisi sampel</label><input id="catatan" type="text"></div>
 
         <div id="msg" class="msg"></div>
@@ -196,7 +227,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
           <tr><td class="k">No. HP / WA</td><td class="t">:</td><td id="pHp"></td></tr>
           <tr><td class="k">Lokasi pengambilan sampel</td><td class="t">:</td><td id="pLokasi"></td></tr>
           <tr><td class="k">Tanggal taruh sampel</td><td class="t">:</td><td id="pTanggal"></td></tr>
-          <tr><td class="k">Parameter analisis</td><td class="t">:</td><td id="pParameter"></td></tr>
+          <tr><td class="k">Kategori pemohon</td><td class="t">:</td><td id="pKategori"></td></tr>
         </table>
 
         <table class="st">
@@ -204,6 +235,14 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
           <tbody id="pRows"></tbody>
           <tfoot><tr><th colspan="2" style="text-align:right">Jumlah</th><th id="pTotal"></th></tr></tfoot>
         </table>
+
+        <div class="sjudul">Rincian biaya analisis</div>
+        <table class="st">
+          <thead><tr><th style="width:40px">No</th><th>Analisis</th><th style="width:90px">Harga (Rp)</th><th style="width:50px">Jml</th><th style="width:100px">Subtotal (Rp)</th></tr></thead>
+          <tbody id="pBiaya"></tbody>
+          <tfoot><tr><th colspan="4" style="text-align:right">Total biaya</th><th class="rr" id="pTotBiaya"></th></tr></tfoot>
+        </table>
+        <p class="cat" id="pTerbilang"></p>
         <p class="cat" id="pCatatan"></p>
 
         <table class="ttd"><tr>
@@ -227,7 +266,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
     <textarea id="csvOut" class="csv" style="display:none" readonly></textarea>
     <div class="tbox">
       <table class="reg">
-        <thead><tr><th>Nomor</th><th>Tgl taruh</th><th>Pengirim</th><th>Jenis sampel</th><th>Jml</th><th>Lokasi</th><th></th></tr></thead>
+        <thead><tr><th>Nomor</th><th>Tgl taruh</th><th>Pengirim</th><th>Jenis sampel</th><th>Jml</th><th>Kat</th><th>Biaya (Rp)</th><th>Lokasi</th><th></th></tr></thead>
         <tbody id="regBody"></tbody>
       </table>
       <div id="regKosong" class="kosong">Belum ada sampel tercatat. Isi formulir lalu tekan <b>Simpan ke register</b>.</div>
@@ -243,7 +282,61 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
   var ROMAWI = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
   var BULAN = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
   var KEY = "lab-tanah-unud:register", KEY_SET = "lab-tanah-unud:settings";
-  var FIELDS = ["nama","instansi","hp","lokasi","tanggal","parameter","petugas","catatan"];
+  var FIELDS = ["nama","instansi","hp","lokasi","tanggal","petugas","catatan"];
+  var KAT_NAMA = {
+    A: "A - Mahasiswa & Dosen S1, S2, S3 Konsentrasi Tanah FP Unud",
+    B: "B - Mahasiswa & Dosen S1, S2, S3 di luar Konsentrasi Tanah & Lingkungan",
+    C: "C - Umum"
+  };
+
+  /* ===== DAFTAR HARGA (Rincian Biaya Analisis Tanah 2022) =====
+     Format: [kode, nama analisis, harga A, harga B, harga C]
+     Ubah angka di sini bila tarif diperbarui. */
+  var ANALISIS = [
+    { grup: "Analisis tanah rutin (No. 1-9)", sampel: "Tanah", paket: true, item: [
+      ["t1",  "Persiapan",                         10000, 12500, 20000],
+      ["t2",  "N-Total (Kjeldahl)",                30000, 35000, 40000],
+      ["t3",  "Fosfat (Bray-1)",                   30000, 35000, 40000],
+      ["t4",  "Kalium (Bray-1)",                   50000, 60000, 60000],
+      ["t5",  "C-Organik (Walkley & Black)",       30000, 35000, 40000],
+      ["t6",  "Kadar garam (Salinitas)",           12500, 15000, 20000],
+      ["t7",  "pH (H2O)",                          12500, 15000, 20000],
+      ["t8",  "Kadar air (kap. lapang)",           10000, 12500, 20000],
+      ["t9",  "Tekstur 3 fraksi",                  30000, 35000, 40000]
+    ]},
+    { grup: "Analisis tanah lainnya (No. 10-31)", sampel: "Tanah", item: [
+      ["t10", "P (HCl)",                           30000, 35000, 40000],
+      ["t11", "K (HCl)",                           50000, 60000, 60000],
+      ["t12", "Fosfat (Olsen)",                    30000, 35000, 40000],
+      ["t13", "Kalium (Olsen)",                    50000, 60000, 60000],
+      ["t14", "Tekstur 3 fraksi + pasir sangat halus", 35000, 40000, 50000],
+      ["t15", "KTK (Amonium Asetat)",              30000, 40000, 60000],
+      ["t16", "KB",                                20000, 25000, 30000],
+      ["t17", "K dapat ditukar",                   50000, 55000, 60000],
+      ["t18", "Na dapat ditukar",                  50000, 55000, 60000],
+      ["t19", "Ca dapat ditukar",                  50000, 55000, 60000],
+      ["t20", "Mg dapat ditukar",                  50000, 55000, 60000],
+      ["t21", "pH KCl",                            12500, 15000, 30000],
+      ["t22", "pH (NaF)",                          20000, 25000, 30000],
+      ["t23", "Berat volume",                      12500, 15000, 17500],
+      ["t24", "Permeabilitas",                     12500, 15000, 17500],
+      ["t25", "Al dapat ditukar",                  17500, 20000, 30000],
+      ["t26", "P retensi",                         30000, 35000, 40000],
+      ["t27", "Al, Fe, Si (Oksalat)",              50000, 55000, 60000],
+      ["t28", "Angka Atterberg",                   20000, 25000, 30000],
+      ["t29", "Berat jenis partikel",              20000, 25000, 30000],
+      ["t30", "Respirasi",                         15000, 20000, 25000],
+      ["t31", "Total bakteri dan jamur",           50000, 60000, 70000]
+    ]},
+    { grup: "Jaringan tanaman", sampel: "Tanaman", item: [
+      ["j1",  "Persiapan (blender) & destruksi",   15000, 15000, 20000],
+      ["j2",  "Nitrogen",                          30000, 35000, 40000],
+      ["j3",  "Fosfat",                            30000, 35000, 40000],
+      ["j4",  "Kalium",                            50000, 55000, 60000]
+    ]}
+  ];
+  var KOL = { A: 2, B: 3, C: 4 };
+  var IDX = {}; /* kode -> {item, grup} */
 
   function $(id) { return document.getElementById(id); }
   function on(el, ev, fn) { el.addEventListener ? el.addEventListener(ev, fn, false) : el.attachEvent("on" + ev, fn); }
@@ -252,6 +345,28 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
   function esc(s) { return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
   function setText(id, t) { var el = $(id); if ("textContent" in el) el.textContent = t; else el.innerText = t; }
   function dash(s) { return trim(s) ? s : "-"; }
+  function rp(n) { return String(Math.round(n || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+  function isiTbody(tb, html) { /* IE tidak mengizinkan innerHTML pada tbody */
+    var tmp = document.createElement("div");
+    tmp.innerHTML = "<table><tbody>" + html + "</tbody></table>";
+    while (tb.firstChild) tb.removeChild(tb.firstChild);
+    var src = tmp.getElementsByTagName("tbody")[0];
+    while (src.firstChild) tb.appendChild(src.firstChild);
+  }
+
+  function terbilang(n) {
+    var s = ["","satu","dua","tiga","empat","lima","enam","tujuh","delapan","sembilan","sepuluh","sebelas"];
+    n = Math.floor(n);
+    if (n < 12) return s[n];
+    if (n < 20) return terbilang(n - 10) + " belas";
+    if (n < 100) return terbilang(Math.floor(n / 10)) + " puluh" + (n % 10 ? " " + terbilang(n % 10) : "");
+    if (n < 200) return "seratus" + (n - 100 ? " " + terbilang(n - 100) : "");
+    if (n < 1000) return terbilang(Math.floor(n / 100)) + " ratus" + (n % 100 ? " " + terbilang(n % 100) : "");
+    if (n < 2000) return "seribu" + (n - 1000 ? " " + terbilang(n - 1000) : "");
+    if (n < 1000000) return terbilang(Math.floor(n / 1000)) + " ribu" + (n % 1000 ? " " + terbilang(n % 1000) : "");
+    if (n < 1000000000) return terbilang(Math.floor(n / 1000000)) + " juta" + (n % 1000000 ? " " + terbilang(n % 1000000) : "");
+    return terbilang(Math.floor(n / 1000000000)) + " miliar" + (n % 1000000000 ? " " + terbilang(n % 1000000000) : "");
+  }
 
   /* Penyimpanan: localStorage bila tersedia (IE11 butuh dibuka lewat http, bukan file://) */
   var store = null;
@@ -263,12 +378,11 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
   var set = load(KEY_SET, { kota: "Denpasar", alamat: "", logo: "" });
   var editId = null, contoh = false;
 
-  /* Tanggal: disimpan sebagai yyyy-mm-dd, diketik sebagai hh/bb/tttt */
+  /* Tanggal: disimpan yyyy-mm-dd, diketik hh/bb/tttt */
   function toISO(s) {
     var m = /^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/.exec(trim(s));
     if (!m) return "";
-    var d = +m[1], b = +m[2], y = +m[3];
-    var t = new Date(y, b - 1, d);
+    var d = +m[1], b = +m[2], y = +m[3], t = new Date(y, b - 1, d);
     if (t.getFullYear() !== y || t.getMonth() !== b - 1 || t.getDate() !== d) return "";
     return y + "-" + pad(b, 2) + "-" + pad(d, 2);
   }
@@ -276,8 +390,8 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
   function tglPanjang(iso) { if (!iso) return ""; var p = iso.split("-"); return (+p[2]) + " " + BULAN[+p[1] - 1] + " " + p[0]; }
   function hariIni() { var d = new Date(); return pad(d.getDate(), 2) + "/" + pad(d.getMonth() + 1, 2) + "/" + d.getFullYear(); }
 
-  /* Tabel jenis sampel */
-  var tbl = $("tblJenis"), i;
+  /* ===== Jenis sampel ===== */
+  var tbl = $("tblJenis"), i, g, k;
   for (i = 0; i < JENIS.length; i++) {
     var tr = tbl.insertRow(-1), id = JENIS[i].toLowerCase();
     tr.id = "tr-" + id;
@@ -298,23 +412,91 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
       on($("q-" + id), "change", ubah);
     })(id);
   }
-
   function ambilSampel() {
     var out = [], j, id, n;
     for (j = 0; j < JENIS.length; j++) {
-      id = JENIS[j].toLowerCase();
-      n = parseInt($("q-" + id).value, 10);
+      id = JENIS[j].toLowerCase(); n = parseInt($("q-" + id).value, 10);
       if ($("cb-" + id).checked && n > 0) out.push({ jenis: JENIS[j], jumlah: n });
     }
     return out;
   }
   function isiSampel(list) {
-    var j, k, id, f;
+    var j, m, id, f;
     for (j = 0; j < JENIS.length; j++) {
       id = JENIS[j].toLowerCase(); f = null;
-      for (k = 0; k < list.length; k++) if (list[k].jenis === JENIS[j]) f = list[k];
+      for (m = 0; m < list.length; m++) if (list[m].jenis === JENIS[j]) f = list[m];
       $("cb-" + id).checked = !!f; $("q-" + id).disabled = !f; $("q-" + id).value = f ? f.jumlah : "";
       $("tr-" + id).className = f ? "on" : "";
+    }
+  }
+  function jumlahJenis(nama) {
+    var s = ambilSampel(), j, tot = 0;
+    for (j = 0; j < s.length; j++) { if (s[j].jenis === nama) return s[j].jumlah; tot += s[j].jumlah; }
+    return tot || 1;
+  }
+
+  /* ===== Kategori ===== */
+  function kategori() { var j, c = ["A","B","C"]; for (j = 0; j < 3; j++) if ($("kat-" + c[j]).checked) return c[j]; return ""; }
+  function setKategori(c) {
+    var j, l = ["A","B","C"];
+    for (j = 0; j < 3; j++) { $("kat-" + l[j]).checked = (l[j] === c); $("kat-" + l[j]).parentNode.className = l[j] === c ? "on" : ""; }
+  }
+  on($("kat-A"), "click", function () { setKategori("A"); ubah(); });
+  on($("kat-B"), "click", function () { setKategori("B"); ubah(); });
+  on($("kat-C"), "click", function () { setKategori("C"); ubah(); });
+
+  /* ===== Tabel centang analisis ===== */
+  var html = "";
+  for (g = 0; g < ANALISIS.length; g++) {
+    html += '<tr class="grp"><td colspan="5">' + esc(ANALISIS[g].grup) +
+      (ANALISIS[g].paket ? ' <button type="button" id="bPaket">Centang semua</button>' : "") + "</td></tr>";
+    for (k = 0; k < ANALISIS[g].item.length; k++) {
+      var it = ANALISIS[g].item[k];
+      IDX[it[0]] = { item: it, grup: ANALISIS[g] };
+      html += '<tr id="ar-' + it[0] + '"><td class="cek"><input type="checkbox" id="ac-' + it[0] + '"></td>' +
+        '<td><label for="ac-' + it[0] + '">' + esc(it[1]) + '</label></td>' +
+        '<td class="r" id="ah-' + it[0] + '"></td>' +
+        '<td class="jm"><input type="text" id="aq-' + it[0] + '" disabled></td>' +
+        '<td class="r" id="as-' + it[0] + '"></td></tr>';
+    }
+  }
+  isiTbody($("anlBody"), html);
+
+  function centang(kode, nyala, qty) {
+    var cb = $("ac-" + kode), q = $("aq-" + kode);
+    cb.checked = nyala; q.disabled = !nyala;
+    $("ar-" + kode).className = nyala ? "on" : "";
+    if (nyala) q.value = qty != null ? qty : (q.value || jumlahJenis(IDX[kode].grup.sampel));
+    else q.value = "";
+  }
+  for (k in IDX) if (IDX.hasOwnProperty(k)) (function (kode) {
+    on($("ac-" + kode), "click", function () { centang(kode, $("ac-" + kode).checked); ubah(); });
+    on($("aq-" + kode), "keyup", ubah);
+    on($("aq-" + kode), "change", ubah);
+  })(k);
+  on($("bPaket"), "click", function () {
+    var it = ANALISIS[0].item, semua = true, j;
+    for (j = 0; j < it.length; j++) if (!$("ac-" + it[j][0]).checked) semua = false;
+    for (j = 0; j < it.length; j++) centang(it[j][0], !semua);
+    ubah();
+  });
+
+  function ambilAnalisis() {
+    var kat = kategori(), out = [], g2, k2, it, q;
+    for (g2 = 0; g2 < ANALISIS.length; g2++) for (k2 = 0; k2 < ANALISIS[g2].item.length; k2++) {
+      it = ANALISIS[g2].item[k2];
+      if (!$("ac-" + it[0]).checked) continue;
+      q = parseInt($("aq-" + it[0]).value, 10); if (!(q > 0)) q = 0;
+      var h = kat ? it[KOL[kat]] : 0;
+      out.push({ kode: it[0], nama: it[1], grup: ANALISIS[g2].sampel, harga: h, jumlah: q, subtotal: h * q });
+    }
+    return out;
+  }
+  function isiAnalisis(list) {
+    var kode, j, f;
+    for (kode in IDX) if (IDX.hasOwnProperty(kode)) {
+      f = null; for (j = 0; j < list.length; j++) if (list[j].kode === kode) f = list[j];
+      centang(kode, !!f, f ? f.jumlah : null);
     }
   }
 
@@ -326,22 +508,45 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
     n++;
     return { urut: n, tahun: y, nomor: pad(n, 3) + "/LTL-FP/" + ROMAWI[d.getMonth()] + "/" + y };
   }
-
   function cariId(id) { for (var j = 0; j < reg.length; j++) if (reg[j].id === id) return j; return -1; }
 
-  /* Pratinjau tanda terima */
+  /* ===== Pratinjau ===== */
   function ubah() {
     if (contoh) { contoh = false; $("flagContoh").style.display = "none"; }
     tampil();
   }
   function tampil() {
-    var s = ambilSampel(), tot = 0, j, html = "", iso = toISO($("tanggal").value);
+    var s = ambilSampel(), tot = 0, j, h = "", iso = toISO($("tanggal").value), kat = kategori();
     for (j = 0; j < s.length; j++) {
       tot += s[j].jumlah;
-      html += '<tr><td class="c">' + (j + 1) + '</td><td>' + esc(s[j].jenis) + '</td><td class="c">' + s[j].jumlah + ' sampel</td></tr>';
+      h += '<tr><td class="c">' + (j + 1) + '</td><td>' + esc(s[j].jenis) + '</td><td class="c">' + s[j].jumlah + ' sampel</td></tr>';
     }
-    if (!s.length) html = '<tr><td class="c">-</td><td><i>Belum ada jenis sampel dipilih</i></td><td class="c">-</td></tr>';
+    if (!s.length) h = '<tr><td class="c">-</td><td><i>Belum ada jenis sampel dipilih</i></td><td class="c">-</td></tr>';
     setText("total", tot);
+    isiTbody($("pRows"), h);
+    setText("pTotal", tot + " sampel");
+
+    /* harga di tabel centang mengikuti kategori */
+    var kode, it, q;
+    for (kode in IDX) if (IDX.hasOwnProperty(kode)) {
+      it = IDX[kode].item;
+      setText("ah-" + kode, kat ? rp(it[KOL[kat]]) : "-");
+      q = parseInt($("aq-" + kode).value, 10);
+      setText("as-" + kode, $("ac-" + kode).checked && kat && q > 0 ? rp(it[KOL[kat]] * q) : "");
+    }
+    var a = ambilAnalisis(), biaya = 0;
+    h = "";
+    for (j = 0; j < a.length; j++) {
+      biaya += a[j].subtotal;
+      h += '<tr><td class="c">' + (j + 1) + '</td><td>' + esc(a[j].nama) + (a[j].grup === "Tanaman" ? " (jaringan)" : "") +
+        '</td><td class="rr">' + (kat ? rp(a[j].harga) : "-") + '</td><td class="c">' + a[j].jumlah + '</td><td class="rr">' + (kat ? rp(a[j].subtotal) : "-") + '</td></tr>';
+    }
+    if (!a.length) h = '<tr><td class="c">-</td><td colspan="4"><i>Belum ada analisis dipilih</i></td></tr>';
+    isiTbody($("pBiaya"), h);
+    setText("totBiaya", rp(biaya));
+    setText("pTotBiaya", kat ? rp(biaya) : "Pilih kategori");
+    setText("pTerbilang", kat && biaya ? "Terbilang: " + terbilang(biaya) + " rupiah" : "");
+
     if (!editId) $("nomor").value = nomorBaru(iso).nomor;
     setText("pNomor", $("nomor").value);
     setText("pNama", dash($("nama").value));
@@ -349,14 +554,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
     setText("pHp", dash($("hp").value));
     setText("pLokasi", dash($("lokasi").value));
     setText("pTanggal", dash(tglPanjang(iso)));
-    setText("pParameter", dash($("parameter").value));
-    /* IE tidak mengizinkan innerHTML pada tbody: bangun ulang lewat tabel sementara */
-    var tb = $("pRows"), tmp = document.createElement("div");
-    tmp.innerHTML = "<table><tbody>" + html + "</tbody></table>";
-    while (tb.firstChild) tb.removeChild(tb.firstChild);
-    var src = tmp.getElementsByTagName("tbody")[0];
-    while (src.firstChild) tb.appendChild(src.firstChild);
-    setText("pTotal", tot + " sampel");
+    setText("pKategori", kat ? KAT_NAMA[kat] : "-");
     setText("pCatatan", trim($("catatan").value) ? "Catatan: " + trim($("catatan").value) : "");
     setText("sPengirim", trim($("nama").value) || "(.............................)");
     setText("sPetugas", trim($("petugas").value) || "(.............................)");
@@ -385,28 +583,32 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
   /* Tombol formulir */
   function baru() {
     editId = null; contoh = false; $("flagContoh").style.display = "none";
-    var k = ["nama","instansi","hp","lokasi","parameter","catatan"];
-    for (var j = 0; j < k.length; j++) $(k[j]).value = "";
-    $("tanggal").value = hariIni(); isiSampel([]); pesan(""); $("bSimpan").innerHTML = "Simpan ke register"; tampil();
+    var f = ["nama","instansi","hp","lokasi","catatan"];
+    for (var j = 0; j < f.length; j++) $(f[j]).value = "";
+    $("tanggal").value = hariIni(); isiSampel([]); isiAnalisis([]); setKategori("");
+    pesan(""); $("bSimpan").innerHTML = "Simpan ke register"; tampil();
   }
   on($("bBaru"), "click", baru);
 
   on($("bSimpan"), "click", function () {
-    var s = ambilSampel(), iso = toISO($("tanggal").value), kurang = [];
+    var s = ambilSampel(), a = ambilAnalisis(), iso = toISO($("tanggal").value), kat = kategori(), kurang = [], j;
     if (!trim($("nama").value)) kurang.push("nama pengirim");
     if (!s.length) kurang.push("jenis & banyaknya sampel");
     if (!trim($("lokasi").value)) kurang.push("lokasi sampel");
     if (!iso) kurang.push("tanggal taruh sampel (format hh/bb/tttt)");
+    if (!kat) kurang.push("kategori pemohon (A/B/C)");
+    for (j = 0; j < a.length; j++) if (!a[j].jumlah) { kurang.push("jumlah sampel untuk " + a[j].nama); break; }
     if (kurang.length) { pesan("Lengkapi dulu: " + kurang.join(", ") + ".", "err"); return; }
-    var tot = 0, j;
+    var tot = 0, biaya = 0, nama = [];
     for (j = 0; j < s.length; j++) tot += s[j].jumlah;
+    for (j = 0; j < a.length; j++) { biaya += a[j].subtotal; nama.push(a[j].nama); }
     var d = { nama: trim($("nama").value), instansi: trim($("instansi").value), hp: trim($("hp").value),
-      lokasi: trim($("lokasi").value), tanggal: iso, parameter: trim($("parameter").value),
-      petugas: trim($("petugas").value), catatan: trim($("catatan").value), sampel: s, total: tot };
-    var k;
+      lokasi: trim($("lokasi").value), tanggal: iso, petugas: trim($("petugas").value), catatan: trim($("catatan").value),
+      sampel: s, total: tot, kategori: kat, analisis: a, parameter: nama.join(", "), biaya: biaya };
+    var key;
     if (editId) {
       var idx = cariId(editId);
-      for (k in d) if (d.hasOwnProperty(k)) reg[idx][k] = d[k];
+      for (key in d) if (d.hasOwnProperty(key)) reg[idx][key] = d[key];
     } else {
       var n = nomorBaru(iso);
       d.id = new Date().getTime().toString(36); d.urut = n.urut; d.tahun = n.tahun; d.nomor = n.nomor;
@@ -423,24 +625,21 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
 
   on($("bCetak"), "click", function () { window.print(); });
 
-  /* Register */
+  /* ===== Register ===== */
   function tampilReg() {
-    var q = trim($("cari").value).toLowerCase(), html = "", n = 0, j, k, r, teks, pil;
+    var q = trim($("cari").value).toLowerCase(), h = "", n = 0, j, m, r, teks, pil;
     for (j = reg.length - 1; j >= 0; j--) {
-      r = reg[j]; pil = ""; teks = r.nomor + " " + r.nama + " " + r.lokasi + " " + (r.instansi || "");
-      for (k = 0; k < (r.sampel || []).length; k++) { pil += '<span class="pill">' + esc(r.sampel[k].jenis) + " " + r.sampel[k].jumlah + "</span>"; teks += " " + r.sampel[k].jenis; }
+      r = reg[j]; pil = ""; teks = r.nomor + " " + r.nama + " " + r.lokasi + " " + (r.instansi || "") + " " + (r.parameter || "");
+      for (m = 0; m < (r.sampel || []).length; m++) { pil += '<span class="pill">' + esc(r.sampel[m].jenis) + " " + r.sampel[m].jumlah + "</span>"; teks += " " + r.sampel[m].jenis; }
       if (q && teks.toLowerCase().indexOf(q) < 0) continue;
       n++;
-      html += '<tr><td class="mono">' + esc(r.nomor) + '</td><td style="white-space:nowrap">' + esc(tglPanjang(r.tanggal)) + '</td><td>' + esc(r.nama) +
+      h += '<tr><td class="mono">' + esc(r.nomor) + '</td><td style="white-space:nowrap">' + esc(tglPanjang(r.tanggal)) + '</td><td>' + esc(r.nama) +
         (r.instansi ? '<br><small style="color:#5d6b62">' + esc(r.instansi) + "</small>" : "") + "</td><td>" + pil + '</td><td class="mono">' + r.total +
+        '</td><td>' + esc(r.kategori || "-") + '</td><td class="mono" style="text-align:right">' + (r.biaya != null ? rp(r.biaya) : "-") +
         '</td><td>' + esc(r.lokasi) + '</td><td style="white-space:nowrap"><button type="button" class="lnk" data-buka="' + r.id + '">Buka</button>' +
         '<button type="button" class="lnk del" data-hapus="' + r.id + '">Hapus</button></td></tr>';
     }
-    var tb = $("regBody"), tmp = document.createElement("div");
-    tmp.innerHTML = "<table><tbody>" + html + "</tbody></table>";
-    while (tb.firstChild) tb.removeChild(tb.firstChild);
-    var src = tmp.getElementsByTagName("tbody")[0];
-    while (src.firstChild) tb.appendChild(src.firstChild);
+    isiTbody($("regBody"), h);
     $("regKosong").style.display = n ? "none" : "block";
     $("regKosong").innerHTML = reg.length ? "Tidak ada data yang cocok dengan pencarian." : "Belum ada sampel tercatat. Isi formulir lalu tekan <b>Simpan ke register</b>.";
     setText("regCount", reg.length ? "(" + reg.length + ")" : "");
@@ -454,7 +653,8 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
       idx = cariId(buka); if (idx < 0) return; r = reg[idx];
       contoh = false; $("flagContoh").style.display = "none"; editId = r.id;
       for (j = 0; j < FIELDS.length; j++) $(FIELDS[j]).value = r[FIELDS[j]] || "";
-      $("tanggal").value = fromISO(r.tanggal); $("nomor").value = r.nomor; isiSampel(r.sampel || []);
+      $("tanggal").value = fromISO(r.tanggal); $("nomor").value = r.nomor;
+      isiSampel(r.sampel || []); setKategori(r.kategori || ""); isiAnalisis(r.analisis || []);
       $("bSimpan").innerHTML = "Simpan perubahan"; pesan("Membuka " + r.nomor + ".", "ok"); tampil(); lihat("form");
     }
     if (hapus) {
@@ -468,15 +668,16 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
 
   function csv() {
     function q(v) { return '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"'; }
-    var head = ["Nomor","Tanggal Taruh","Nama Pengirim","Instansi/NIM","No HP"].concat(JENIS).concat(["Total Sampel","Lokasi","Parameter","Petugas","Catatan"]);
-    var rows = [], j, k, m, r, line;
-    for (k = 0; k < head.length; k++) head[k] = q(head[k]);
+    var head = ["Nomor","Tanggal Taruh","Nama Pengirim","Instansi/NIM","No HP"].concat(JENIS)
+      .concat(["Total Sampel","Kategori","Analisis","Total Biaya (Rp)","Lokasi","Petugas","Catatan"]);
+    var rows = [], j, k2, m, r, line, v;
+    for (k2 = 0; k2 < head.length; k2++) head[k2] = q(head[k2]);
     rows.push(head.join(";"));
     for (j = 0; j < reg.length; j++) {
       r = reg[j]; line = [r.nomor, fromISO(r.tanggal), r.nama, r.instansi, r.hp];
-      for (k = 0; k < JENIS.length; k++) { var v = ""; for (m = 0; m < (r.sampel || []).length; m++) if (r.sampel[m].jenis === JENIS[k]) v = r.sampel[m].jumlah; line.push(v); }
-      line = line.concat([r.total, r.lokasi, r.parameter, r.petugas, r.catatan]);
-      for (k = 0; k < line.length; k++) line[k] = q(line[k]);
+      for (k2 = 0; k2 < JENIS.length; k2++) { v = ""; for (m = 0; m < (r.sampel || []).length; m++) if (r.sampel[m].jenis === JENIS[k2]) v = r.sampel[m].jumlah; line.push(v); }
+      line = line.concat([r.total, r.kategori, r.parameter, r.biaya, r.lokasi, r.petugas, r.catatan]);
+      for (k2 = 0; k2 < line.length; k2++) line[k2] = q(line[k2]);
       rows.push(line.join(";"));
     }
     return rows.join("\r\n");
@@ -509,9 +710,11 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
   if (!reg.length) {
     contoh = true;
     $("nama").value = "I Made Contoh"; $("instansi").value = "Prodi Agroekoteknologi"; $("hp").value = "0812-xxxx-xxxx";
-    $("lokasi").value = "Desa Pancasari, Kec. Sukasada, Kab. Buleleng"; $("parameter").value = "pH, C-organik, N-total, P, K";
+    $("lokasi").value = "Desa Pancasari, Kec. Sukasada, Kab. Buleleng";
     $("catatan").value = "Tanah kering angin, kemasan plastik 1 kg";
-    isiSampel([{ jenis: "Tanah", jumlah: 5 }, { jenis: "Kompos", jumlah: 2 }]);
+    isiSampel([{ jenis: "Tanah", jumlah: 5 }]);
+    setKategori("A");
+    isiAnalisis([{ kode: "t1", jumlah: 5 }, { kode: "t2", jumlah: 5 }, { kode: "t5", jumlah: 5 }, { kode: "t7", jumlah: 5 }]);
   } else { $("flagContoh").style.display = "none"; }
   tampil(); tampilReg();
 })();
