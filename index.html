@@ -76,12 +76,12 @@ legend { font-weight: bold; padding: 0 4px; }
 .sheet { background: #fff; color: #111; padding: 26px 30px 32px; border: 1px solid #cfd8d1; font-family: "Times New Roman", Times, serif; font-size: 14px; }
 .kop { width: 100%; border-collapse: collapse; border-bottom: 3px double #222; }
 .kop td { vertical-align: middle; padding-bottom: 8px; }
-/* Bidang logo 4 x 3 cm. Gambar tidak ditarik: lebar & tinggi asli dipertahankan,
-   jadi lambang bulat tetap bulat sempurna (diameter maks. 3 cm). */
-.kop td.lg { width: 4cm; }
-.logo { width: 4cm; height: 3cm; line-height: 3cm; text-align: center; overflow: hidden; }
-.logo img { max-width: 4cm; max-height: 3cm; width: auto; height: auto; vertical-align: middle; border: 0; }
-.logo .ph { display: inline-block; width: 3cm; height: 3cm; line-height: 3cm; border: 1px dashed #999; border-radius: 50%;
+/* Bidang logo berproporsi 4 : 3 (2,8 x 2,1 cm), setinggi blok tulisan kop. Gambar tidak ditarik: lebar & tinggi asli dipertahankan,
+   jadi lambang bulat tetap bulat sempurna (diameter maks. 2,1 cm). */
+.kop td.lg { width: 2.8cm; }
+.logo { width: 2.8cm; height: 2.1cm; line-height: 2.1cm; text-align: center; overflow: hidden; }
+.logo img { max-width: 2.8cm; max-height: 2.1cm; width: auto; height: auto; vertical-align: middle; border: 0; }
+.logo .ph { display: inline-block; width: 2.1cm; height: 2.1cm; line-height: 2.1cm; border: 1px dashed #999; border-radius: 50%;
   font: 10px Arial, sans-serif; color: #777; vertical-align: middle; }
 .kt { text-align: center; line-height: 1.25; font-weight: bold; }
 .kt .a { font-size: 12px; white-space: nowrap; } .kt .b { font-size: 16px; } .kt .c { font-size: 14px; } .kt .d { font-size: 14px; }
@@ -200,7 +200,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
 
         <fieldset>
           <legend>Pengaturan kop surat</legend>
-          <div class="f"><label for="logoIn">Logo (PNG/JPG, di bawah 500 KB; tampil 4 x 3 cm, bentuk asli dipertahankan)</label><input id="logoIn" type="file" accept="image/*"></div>
+          <div class="f"><label for="logoIn">Logo (PNG/JPG, di bawah 500 KB; bentuk asli dipertahankan)</label><input id="logoIn" type="file" accept="image/*"></div>
           <div class="f"><label for="alamat">Alamat &amp; kontak laboratorium</label><input id="alamat" type="text"></div>
           <div class="f"><label for="kota">Kota penandatanganan</label><input id="kota" type="text"></div>
         </fieldset>
