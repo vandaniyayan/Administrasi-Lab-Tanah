@@ -14,6 +14,18 @@ Fakultas Pertanian, Universitas Udayana.
 Tambahan: nomor registrasi otomatis (`001/LTL-FP/X/2026`), tanda terima siap cetak A4
 dengan kolom tanda tangan, register sampel dengan pencarian, dan ekspor CSV untuk Excel.
 
+## Versi
+- `index.html` — versi ringan (±28 KB), satu file, tanpa internet. Jalan di Windows 7:
+  Internet Explorer 11, Chrome, dan Firefox lama.
+- `versi-modern.html` — tampilan modern (butuh browser baru dan internet untuk font).
+
+Keduanya memakai data register yang sama bila dibuka dari alamat yang sama.
+
+## Pakai di Windows 7 tanpa internet
+Salin `index.html` ke komputer lab, lalu buka dengan **Chrome atau Firefox**.
+Internet Explorer 11 tidak bisa menyimpan register bila file dibuka langsung dari disk;
+di IE11 buka lewat alamat GitHub Pages.
+
 ## Menjalankan
 Buka `index.html` di browser, atau aktifkan GitHub Pages:
 Settings → Pages → Source: *Deploy from a branch* → `main` / `(root)`.

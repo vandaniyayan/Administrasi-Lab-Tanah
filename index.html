@@ -1,494 +1,519 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Penerimaan Sampel Lab Tanah</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tinos:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- Versi ringan: satu file, tanpa internet, kompatibel Windows 7 (IE11, Chrome, Firefox). -->
 <style>
-/* Layout: workbench on the left (form), the printed receipt on the right as a sheet of paper; register below. */
-:root{
-  --bg:#eef1ec; --surface:#ffffff; --paper:#ffffff; --ink:#1d2a22; --muted:#5d6b62;
-  --line:#cfd8d1; --accent:#2f5d3a; --accent-ink:#ffffff; --soil:#7a5a3a; --warn:#9a3b1f;
-  --chip:#e3ebe4;
-  --f-kop:"Tinos","Times New Roman",Times,serif;
-  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
-  color-scheme:light;
+* { box-sizing: border-box; }
+body { margin: 0; padding: 16px; background: #eef1ec; color: #1d2a22; font-family: Tahoma, Arial, sans-serif; font-size: 14px; }
+.wrap { max-width: 1100px; margin: 0 auto; }
+h1 { font-family: "Times New Roman", Times, serif; font-size: 22px; margin: 0 0 2px; }
+.sub { color: #5d6b62; margin: 0 0 12px; font-size: 13px; }
+.tabs { margin: 0 0 14px; }
+.tabs button { font: inherit; font-weight: bold; padding: 7px 14px; border: 1px solid #b9c6bc; background: #fff; color: #1d2a22; cursor: pointer; }
+.tabs button.on { background: #2f5d3a; color: #fff; border-color: #2f5d3a; }
+
+.cols { overflow: hidden; }
+.left { float: left; width: 46%; }
+.right { float: right; width: 52%; }
+@media (max-width: 900px) { .left, .right { float: none; width: 100%; } .right { margin-top: 16px; } }
+
+.panel { background: #fff; border: 1px solid #cfd8d1; padding: 16px; }
+.panel h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #5d6b62; margin: 0 0 10px; }
+.f { margin-bottom: 10px; }
+.f label, .lbl { display: block; font-weight: bold; font-size: 13px; margin-bottom: 3px; }
+.f small { color: #5d6b62; font-size: 11px; }
+.f input, .f textarea, .search { width: 100%; font: inherit; padding: 6px 8px; border: 1px solid #b9c6bc; background: #fbfcfb; color: #1d2a22; }
+.f textarea { height: 54px; resize: vertical; }
+.f input[readonly] { background: #eef1ec; }
+.half { width: 49%; float: left; }
+.half + .half { float: right; }
+.row { overflow: hidden; }
+@media (max-width: 480px) { .half, .half + .half { float: none; width: 100%; } }
+.req { color: #9a3b1f; }
+
+table.jenis { width: 100%; border-collapse: collapse; }
+table.jenis td { border: 1px solid #cfd8d1; padding: 5px 8px; }
+table.jenis td.cek { width: 32px; text-align: center; }
+table.jenis td.jml { width: 110px; }
+table.jenis input.num { width: 100%; font: inherit; padding: 4px 6px; border: 1px solid #b9c6bc; }
+table.jenis tr.on td { background: #e3ebe4; }
+.total { background: #e3ebe4; padding: 8px 10px; margin: 8px 0 10px; font-weight: bold; }
+.total span { float: right; }
+
+.btn { font: inherit; font-weight: bold; padding: 7px 14px; margin: 0 6px 6px 0; cursor: pointer; border: 1px solid #2f5d3a; background: #2f5d3a; color: #fff; }
+.btn.alt { background: #fff; color: #2f5d3a; }
+.btn.grey { background: #fff; color: #5d6b62; border-color: #b9c6bc; }
+.btn.red { background: #9a3b1f; border-color: #9a3b1f; }
+.msg { min-height: 18px; font-size: 13px; margin: 4px 0 8px; }
+.msg.err { color: #9a3b1f; } .msg.ok { color: #2f5d3a; }
+.contoh { color: #7a5a3a; font-size: 11px; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; }
+fieldset { border: 1px solid #cfd8d1; margin: 10px 0 0; padding: 10px; }
+legend { font-weight: bold; padding: 0 4px; }
+
+/* Lembar tanda terima */
+.sheet { background: #fff; color: #111; padding: 26px 30px 32px; border: 1px solid #cfd8d1; font-family: "Times New Roman", Times, serif; font-size: 14px; }
+.kop { width: 100%; border-collapse: collapse; border-bottom: 3px double #222; }
+.kop td { vertical-align: middle; padding-bottom: 8px; }
+.kop td.lg { width: 86px; }
+.logo { width: 80px; height: 80px; border: 1px dashed #999; text-align: center; font: 10px Arial, sans-serif; color: #777; line-height: 80px; overflow: hidden; }
+.logo img { width: 80px; height: 80px; }
+.logo.ada { border: 0; }
+.kt { text-align: center; line-height: 1.25; font-weight: bold; }
+.kt .a { font-size: 14px; } .kt .b { font-size: 17px; } .kt .c { font-size: 15px; } .kt .d { font-size: 16px; }
+.kt .e { font-size: 11px; font-weight: normal; margin-top: 3px; }
+.judul { text-align: center; font-weight: bold; text-decoration: underline; margin: 18px 0 2px; font-size: 15px; }
+.nomor { text-align: center; margin-bottom: 14px; }
+table.kv { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+table.kv td { padding: 3px 0; vertical-align: top; }
+table.kv td.k { width: 38%; } table.kv td.t { width: 14px; }
+table.st { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+table.st th, table.st td { border: 1px solid #222; padding: 5px 8px; }
+table.st th { background: #eee; }
+table.st td.c { text-align: center; }
+.cat { font-size: 12px; color: #444; margin: 0 0 16px; }
+table.ttd { width: 100%; text-align: center; }
+table.ttd td { width: 50%; vertical-align: top; }
+.ruang { height: 64px; }
+.nm { font-weight: bold; text-decoration: underline; }
+
+/* Register */
+.bar { overflow: hidden; margin-bottom: 10px; }
+.bar .search { width: 280px; float: left; }
+.bar .act { float: right; }
+.tbox { overflow-x: auto; background: #fff; border: 1px solid #cfd8d1; }
+table.reg { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 760px; }
+table.reg th { text-align: left; background: #eef1ec; color: #5d6b62; font-size: 11px; text-transform: uppercase; padding: 8px 10px; border-bottom: 1px solid #cfd8d1; }
+table.reg td { padding: 8px 10px; border-bottom: 1px solid #cfd8d1; vertical-align: top; }
+.mono { font-family: Consolas, "Courier New", monospace; white-space: nowrap; }
+.pill { display: inline-block; background: #e3ebe4; padding: 1px 7px; margin: 1px 2px 1px 0; font-size: 12px; }
+.lnk { background: none; border: 0; color: #2f5d3a; font: inherit; font-weight: bold; cursor: pointer; padding: 0; margin-right: 10px; }
+.lnk.del { color: #9a3b1f; }
+.kosong { padding: 30px; text-align: center; color: #5d6b62; }
+.konfirm { background: #f3e6e1; padding: 10px; margin-bottom: 10px; }
+textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margin-bottom: 10px; }
+.ket { color: #5d6b62; font-size: 12px; }
+
+@media print {
+  @page { size: A4; margin: 14mm; }
+  body { background: #fff; padding: 0; }
+  .noprint, .left, h1, .sub, .tabs, #vReg { display: none !important; }
+  .right { float: none; width: 100%; }
+  .sheet { border: 0; padding: 0; }
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#141a16; --surface:#1c241f; --paper:#f7f8f5; --ink:#e4ebe5; --muted:#9aa89f;
-  --line:#33403a; --accent:#7fb38b; --accent-ink:#10170f; --soil:#c9a27a; --warn:#e48a6a; --chip:#26322b; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#141a16; --surface:#1c241f; --paper:#f7f8f5; --ink:#e4ebe5; --muted:#9aa89f;
-  --line:#33403a; --accent:#7fb38b; --accent-ink:#10170f; --soil:#c9a27a; --warn:#e48a6a; --chip:#26322b; color-scheme:dark}
-
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;margin:0;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
-.wrap{max-width:1180px;margin:0 auto;display:grid;gap:24px}
-header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
-header.top h1{font-family:var(--f-kop);font-size:1.6rem;margin:0;text-wrap:balance}
-header.top p{margin:0;color:var(--muted);font-size:.9rem}
-.tabs{display:flex;gap:6px}
-.tabs button{font:inherit;font-weight:500;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:6px;cursor:pointer}
-.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-
-.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:24px;align-items:start}
-@media (max-width:900px){.grid{grid-template-columns:1fr}}
-
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px;display:grid;gap:16px;min-width:0}
-.panel h2{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0;font-weight:600}
-.field{display:grid;gap:4px}
-.field label,.legend{font-size:.85rem;font-weight:500}
-.field small{color:var(--muted);font-size:.78rem}
-input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%}
-textarea{min-height:60px;resize:vertical}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media (max-width:480px){.row2{grid-template-columns:1fr}}
-.req{color:var(--warn)}
-
-.types{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
-.type{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 8px;border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:var(--bg)}
-.type.on{border-color:var(--accent);background:var(--chip)}
-.type input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
-.type span{font-weight:500}
-.type input[type=number]{grid-column:1/-1;padding:5px 8px;font-family:var(--f-mono);background:var(--surface)}
-.type input[type=number]:disabled{opacity:.4}
-.total{display:flex;justify-content:space-between;align-items:baseline;padding:10px 12px;border-radius:6px;background:var(--chip);font-variant-numeric:tabular-nums}
-.total b{font-family:var(--f-mono);font-size:1.2rem}
-
-.actions{display:flex;flex-wrap:wrap;gap:8px}
-.btn{font:inherit;font-weight:600;border-radius:6px;padding:9px 16px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
-.btn.ghost{background:transparent;color:var(--accent)}
-.btn.plain{background:transparent;color:var(--muted);border-color:var(--line)}
-.msg{font-size:.85rem;min-height:1.2em}
-.msg.err{color:var(--warn)} .msg.ok{color:var(--accent)}
-
-/* ---- The receipt sheet: always printed-paper colors ---- */
-.sheet-wrap{min-width:0;overflow-x:auto}
-.sheet{--p-ink:#111;--p-muted:#444;--p-line:#222;background:var(--paper);color:var(--p-ink);width:100%;min-width:560px;
-  padding:28px 34px 36px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 8px 24px rgba(0,0,0,.08);font-family:var(--f-kop);font-size:13.5px}
-.kop{display:grid;grid-template-columns:84px 1fr 84px;align-items:center;gap:10px;padding-bottom:10px;border-bottom:3px double var(--p-line)}
-.logo{width:80px;height:80px;display:grid;place-items:center;border:1px dashed #999;border-radius:50%;font:500 10px/1.2 var(--f-body);color:#777;text-align:center;overflow:hidden}
-.logo img{width:100%;height:100%;object-fit:contain}
-.logo.has{border:none;border-radius:0}
-.kop-text{text-align:center;line-height:1.25}
-.kop-text .l1{font-size:14px;font-weight:700;letter-spacing:.02em}
-.kop-text .l2{font-size:17px;font-weight:700;letter-spacing:.04em}
-.kop-text .l3{font-size:15px;font-weight:700}
-.kop-text .l4{font-size:16px;font-weight:700;letter-spacing:.03em}
-.kop-text .addr{font-size:11.5px;margin-top:3px}
-.doc-title{text-align:center;margin:18px 0 2px;font-size:15px;font-weight:700;text-decoration:underline;letter-spacing:.04em}
-.doc-no{text-align:center;font-size:13px;margin-bottom:16px}
-.kv{width:100%;border-collapse:collapse;margin-bottom:14px}
-.kv td{padding:3px 0;vertical-align:top}
-.kv td:first-child{width:38%}
-.kv td:nth-child(2){width:14px}
-.st{width:100%;border-collapse:collapse;margin:6px 0 14px;font-variant-numeric:tabular-nums}
-.st th,.st td{border:1px solid var(--p-line);padding:5px 8px}
-.st th{background:#eee;font-weight:700;text-align:center}
-.st td.n{text-align:center;width:48px}
-.st td.q{text-align:center;width:120px}
-.st tr.empty td{color:#888;font-style:italic}
-.note{font-size:12px;color:var(--p-muted);margin:0 0 18px}
-.sign{display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center;margin-top:10px}
-.sign .space{height:64px}
-.sign .nm{font-weight:700;text-decoration:underline}
-.example-flag{font:600 11px var(--f-body);color:var(--soil);letter-spacing:.06em;text-transform:uppercase}
-
-/* ---- Register ---- */
-.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
-table.reg{width:100%;border-collapse:collapse;font-size:.88rem;font-variant-numeric:tabular-nums;min-width:760px}
-table.reg th{text-align:left;font-weight:600;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:10px 12px;border-bottom:1px solid var(--line);background:var(--bg)}
-table.reg td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-table.reg td.mono{font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
-.pill{display:inline-block;font-size:.75rem;padding:1px 8px;border-radius:99px;background:var(--chip);margin:1px 2px 1px 0}
-.link{background:none;border:none;color:var(--accent);font:inherit;font-weight:500;cursor:pointer;padding:0;margin-right:10px}
-.link.del{color:var(--warn)}
-.empty{padding:36px 20px;text-align:center;color:var(--muted)}
-.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
-.toolbar input{max-width:280px}
-.confirm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--chip);padding:10px 12px;border-radius:6px}
-textarea.csv{font-family:var(--f-mono);font-size:.78rem;min-height:120px}
-
-@media print{
-  @page{size:A4;margin:14mm}
-  body{background:#fff;padding:0}
-  .no-print,header.top,.panel,#view-register{display:none!important}
-  .grid{display:block}
-  .sheet{box-shadow:none;min-width:0;padding:0}
-  .st th{background:#eee!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-
 <div class="wrap">
-  <header class="top no-print">
-    <div>
-      <h1>Penerimaan Sampel Analisis</h1>
-      <p>Laboratorium Tanah dan Lingkungan · Fakultas Pertanian Universitas Udayana</p>
+  <div class="noprint">
+    <h1>Penerimaan Sampel Analisis</h1>
+    <p class="sub">Laboratorium Tanah dan Lingkungan &middot; Fakultas Pertanian Universitas Udayana</p>
+    <div class="tabs">
+      <button type="button" id="tabForm" class="on">Formulir</button>
+      <button type="button" id="tabReg">Register Sampel <span id="regCount"></span></button>
     </div>
-    <div class="tabs" role="tablist">
-      <button id="tab-form" role="tab" aria-selected="true">Formulir</button>
-      <button id="tab-register" role="tab" aria-selected="false">Register Sampel <span id="reg-count"></span></button>
+  </div>
+
+  <!-- FORMULIR -->
+  <div id="vForm" class="cols">
+    <div class="left noprint">
+      <form id="frm" class="panel" action="#" onsubmit="return false;">
+        <h2>Data penerimaan</h2>
+        <div id="flagContoh" class="contoh">Contoh pengisian. Tekan "Formulir baru" untuk mulai.</div>
+
+        <div class="row">
+          <div class="f half">
+            <label for="nomor">Nomor registrasi</label>
+            <input id="nomor" type="text" readonly>
+          </div>
+          <div class="f half">
+            <label for="tanggal">Tanggal taruh sampel <span class="req">*</span></label>
+            <input id="tanggal" type="text" placeholder="hh/bb/tttt" maxlength="10">
+          </div>
+        </div>
+
+        <div class="f">
+          <label for="nama">Nama pengirim <span class="req">*</span></label>
+          <input id="nama" type="text">
+        </div>
+        <div class="row">
+          <div class="f half"><label for="instansi">Instansi / NIM</label><input id="instansi" type="text"></div>
+          <div class="f half"><label for="hp">No. HP / WA</label><input id="hp" type="text"></div>
+        </div>
+
+        <span class="lbl">Jenis &amp; banyaknya sampel <span class="req">*</span></span>
+        <table class="jenis" id="tblJenis"></table>
+        <div class="total">Banyaknya sampel dikirim <span><span id="total">0</span> sampel</span></div>
+
+        <div class="f">
+          <label for="lokasi">Lokasi pengambilan sampel <span class="req">*</span></label>
+          <textarea id="lokasi"></textarea>
+          <small>Desa/Kelurahan, Kecamatan, Kabupaten; koordinat bila ada.</small>
+        </div>
+        <div class="row">
+          <div class="f half"><label for="parameter">Parameter analisis</label><input id="parameter" type="text"></div>
+          <div class="f half"><label for="petugas">Petugas penerima</label><input id="petugas" type="text"></div>
+        </div>
+        <div class="f"><label for="catatan">Catatan kondisi sampel</label><input id="catatan" type="text"></div>
+
+        <div id="msg" class="msg"></div>
+        <button type="button" class="btn" id="bSimpan">Simpan ke register</button>
+        <button type="button" class="btn alt" id="bCetak">Cetak tanda terima</button>
+        <button type="button" class="btn grey" id="bBaru">Formulir baru</button>
+
+        <fieldset>
+          <legend>Pengaturan kop surat</legend>
+          <div class="f"><label for="logoIn">Logo (PNG/JPG, di bawah 500 KB)</label><input id="logoIn" type="file" accept="image/*"></div>
+          <div class="f"><label for="alamat">Alamat &amp; kontak laboratorium</label><input id="alamat" type="text"></div>
+          <div class="f"><label for="kota">Kota penandatanganan</label><input id="kota" type="text"></div>
+        </fieldset>
+      </form>
     </div>
-  </header>
 
-  <!-- ================= FORM VIEW ================= -->
-  <section id="view-form" class="grid">
-    <form id="f" class="panel no-print" novalidate>
-      <h2>Data penerimaan</h2>
+    <div class="right">
+      <div class="sheet">
+        <table class="kop"><tr>
+          <td class="lg"><div class="logo" id="logo">Logo Unud</div></td>
+          <td class="kt">
+            <div class="a">KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI</div>
+            <div class="b">UNIVERSITAS UDAYANA</div>
+            <div class="c">FAKULTAS PERTANIAN</div>
+            <div class="d">LABORATORIUM TANAH DAN LINGKUNGAN</div>
+            <div class="e" id="pAlamat"></div>
+          </td>
+          <td class="lg"></td>
+        </tr></table>
 
-      <div class="row2">
-        <div class="field">
-          <label for="nomor">Nomor registrasi</label>
-          <input id="nomor" readonly>
-          <small>Dibuat otomatis per tahun.</small>
-        </div>
-        <div class="field">
-          <label for="tanggal">Tanggal taruh sampel <span class="req">*</span></label>
-          <input id="tanggal" type="date" required>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="nama">Nama pengirim <span class="req">*</span></label>
-        <input id="nama" autocomplete="name" required placeholder="Nama lengkap pengirim">
-      </div>
-      <div class="row2">
-        <div class="field">
-          <label for="instansi">Instansi / NIM</label>
-          <input id="instansi" placeholder="Opsional">
-        </div>
-        <div class="field">
-          <label for="hp">No. HP / WA</label>
-          <input id="hp" inputmode="tel" placeholder="Opsional">
-        </div>
-      </div>
-
-      <div class="field">
-        <span class="legend">Jenis &amp; banyaknya sampel <span class="req">*</span></span>
-        <div class="types" id="types"></div>
-      </div>
-      <div class="total"><span>Banyaknya sampel dikirim</span><b><span id="total">0</span> sampel</b></div>
-
-      <div class="field">
-        <label for="lokasi">Lokasi pengambilan sampel <span class="req">*</span></label>
-        <textarea id="lokasi" required placeholder="Desa/Kelurahan, Kecamatan, Kabupaten; titik koordinat bila ada"></textarea>
-      </div>
-
-      <div class="row2">
-        <div class="field">
-          <label for="parameter">Parameter analisis diminta</label>
-          <input id="parameter" placeholder="Opsional, mis. pH, C-organik, N, P, K">
-        </div>
-        <div class="field">
-          <label for="petugas">Petugas penerima</label>
-          <input id="petugas" placeholder="Nama petugas lab">
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="catatan">Catatan kondisi sampel</label>
-        <input id="catatan" placeholder="Opsional, mis. kering angin, kemasan plastik 1 kg">
-      </div>
-
-      <div class="msg" id="msg" role="status"></div>
-      <div class="actions">
-        <button class="btn" type="submit" id="btn-save">Simpan ke register</button>
-        <button class="btn ghost" type="button" id="btn-print" hidden>Cetak tanda terima</button>
-        <button class="btn plain" type="button" id="btn-new">Formulir baru</button>
-      </div>
-
-      <details>
-        <summary style="cursor:pointer;font-weight:500">Pengaturan kop surat</summary>
-        <div style="display:grid;gap:12px;margin-top:12px">
-          <div class="field">
-            <label for="logo-in">Logo (PNG/JPG)</label>
-            <input id="logo-in" type="file" accept="image/*">
-            <small>Logo disimpan di browser ini saja.</small>
-          </div>
-          <div class="field">
-            <label for="alamat">Alamat &amp; kontak laboratorium</label>
-            <input id="alamat" placeholder="Alamat, telepon, email laboratorium">
-          </div>
-          <div class="field">
-            <label for="kota">Kota penandatanganan</label>
-            <input id="kota" value="Denpasar">
-          </div>
-        </div>
-      </details>
-    </form>
-
-    <div class="sheet-wrap">
-      <div class="sheet" id="sheet">
-        <div class="kop">
-          <div class="logo" id="logo">Logo<br>Unud</div>
-          <div class="kop-text">
-            <div class="l1">KEMENTERIAN PENDIDIKAN TINGGI, SAINS, DAN TEKNOLOGI</div>
-            <div class="l2">UNIVERSITAS UDAYANA</div>
-            <div class="l3">FAKULTAS PERTANIAN</div>
-            <div class="l4">LABORATORIUM TANAH DAN LINGKUNGAN</div>
-            <div class="addr" id="p-alamat"></div>
-          </div>
-          <div></div>
-        </div>
-
-        <div class="doc-title">TANDA TERIMA SAMPEL ANALISIS</div>
-        <div class="doc-no">Nomor: <span id="p-nomor"></span></div>
+        <div class="judul">TANDA TERIMA SAMPEL ANALISIS</div>
+        <div class="nomor">Nomor: <span id="pNomor"></span></div>
 
         <table class="kv">
-          <tr><td>Nama pengirim</td><td>:</td><td id="p-nama"></td></tr>
-          <tr><td>Instansi / NIM</td><td>:</td><td id="p-instansi"></td></tr>
-          <tr><td>No. HP / WA</td><td>:</td><td id="p-hp"></td></tr>
-          <tr><td>Lokasi pengambilan sampel</td><td>:</td><td id="p-lokasi"></td></tr>
-          <tr><td>Tanggal taruh sampel</td><td>:</td><td id="p-tanggal"></td></tr>
-          <tr><td>Parameter analisis</td><td>:</td><td id="p-parameter"></td></tr>
+          <tr><td class="k">Nama pengirim</td><td class="t">:</td><td id="pNama"></td></tr>
+          <tr><td class="k">Instansi / NIM</td><td class="t">:</td><td id="pInstansi"></td></tr>
+          <tr><td class="k">No. HP / WA</td><td class="t">:</td><td id="pHp"></td></tr>
+          <tr><td class="k">Lokasi pengambilan sampel</td><td class="t">:</td><td id="pLokasi"></td></tr>
+          <tr><td class="k">Tanggal taruh sampel</td><td class="t">:</td><td id="pTanggal"></td></tr>
+          <tr><td class="k">Parameter analisis</td><td class="t">:</td><td id="pParameter"></td></tr>
         </table>
 
         <table class="st">
-          <thead><tr><th>No</th><th>Jenis sampel</th><th>Banyaknya</th></tr></thead>
-          <tbody id="p-rows"></tbody>
-          <tfoot><tr><th colspan="2" style="text-align:right">Jumlah</th><th id="p-total"></th></tr></tfoot>
+          <thead><tr><th style="width:48px">No</th><th>Jenis sampel</th><th style="width:120px">Banyaknya</th></tr></thead>
+          <tbody id="pRows"></tbody>
+          <tfoot><tr><th colspan="2" style="text-align:right">Jumlah</th><th id="pTotal"></th></tr></tfoot>
         </table>
-        <p class="note" id="p-catatan"></p>
+        <p class="cat" id="pCatatan"></p>
 
-        <div class="sign">
-          <div><div>Pengirim,</div><div class="space"></div><div class="nm" id="s-pengirim"></div></div>
-          <div><div id="s-tgl"></div><div>Petugas penerima,</div><div class="space"></div><div class="nm" id="s-petugas"></div></div>
-        </div>
+        <table class="ttd"><tr>
+          <td><div>&nbsp;</div><div>Pengirim,</div><div class="ruang"></div><div class="nm" id="sPengirim"></div></td>
+          <td><div id="sTgl"></div><div>Petugas penerima,</div><div class="ruang"></div><div class="nm" id="sPetugas"></div></td>
+        </tr></table>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- ================= REGISTER VIEW ================= -->
-  <section id="view-register" hidden style="display:grid;gap:12px">
-    <div class="toolbar">
-      <input id="cari" type="search" placeholder="Cari nama, lokasi, nomor…">
-      <div class="actions">
-        <button class="btn ghost" type="button" id="btn-csv">Salin CSV (untuk Excel)</button>
-        <button class="btn ghost" type="button" id="btn-dl" hidden>Unduh CSV</button>
+  <!-- REGISTER -->
+  <div id="vReg" style="display:none">
+    <div class="bar">
+      <input id="cari" class="search" type="text" placeholder="Cari nama, lokasi, nomor...">
+      <div class="act">
+        <button type="button" class="btn alt" id="bUnduh">Unduh CSV (Excel)</button>
+        <button type="button" class="btn grey" id="bTeks">Tampilkan teks CSV</button>
       </div>
     </div>
-    <div id="confirm-box"></div>
-    <textarea class="csv" id="csv-out" hidden readonly></textarea>
-    <div class="tablebox">
+    <div id="konfirm"></div>
+    <textarea id="csvOut" class="csv" style="display:none" readonly></textarea>
+    <div class="tbox">
       <table class="reg">
         <thead><tr><th>Nomor</th><th>Tgl taruh</th><th>Pengirim</th><th>Jenis sampel</th><th>Jml</th><th>Lokasi</th><th></th></tr></thead>
-        <tbody id="reg-body"></tbody>
+        <tbody id="regBody"></tbody>
       </table>
-      <div class="empty" id="reg-empty">Belum ada sampel tercatat. Isi formulir lalu tekan <b>Simpan ke register</b>; datanya muncul di sini.</div>
+      <div id="regKosong" class="kosong">Belum ada sampel tercatat. Isi formulir lalu tekan <b>Simpan ke register</b>.</div>
     </div>
-    <p style="color:var(--muted);font-size:.82rem;margin:0">Register tersimpan di browser perangkat ini. Salin CSV secara berkala sebagai cadangan.</p>
-  </section>
+    <p class="ket" id="ketSimpan">Register tersimpan di browser komputer ini. Unduh CSV secara berkala sebagai cadangan.</p>
+  </div>
 </div>
 
 <script>
-(function(){
-  const JENIS = ["Tanah","Pupuk","Kompos","POC","Air","Tanaman"];
-  const BULAN_ROM = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
-  const BULAN = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
-  const KEY = "lab-tanah-unud:register", KEY_SET = "lab-tanah-unud:settings";
-  const inFrame = (()=>{try{return window.self!==window.top}catch(e){return true}})();
-  const $ = id => document.getElementById(id);
+/* ES5 murni agar jalan di Internet Explorer 11 / browser lama Windows 7 */
+(function () {
+  var JENIS = ["Tanah", "Pupuk", "Kompos", "POC", "Air", "Tanaman"];
+  var ROMAWI = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
+  var BULAN = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+  var KEY = "lab-tanah-unud:register", KEY_SET = "lab-tanah-unud:settings";
+  var FIELDS = ["nama","instansi","hp","lokasi","tanggal","parameter","petugas","catatan"];
 
-  const load = (k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}};
-  const save = (k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}};
+  function $(id) { return document.getElementById(id); }
+  function on(el, ev, fn) { el.addEventListener ? el.addEventListener(ev, fn, false) : el.attachEvent("on" + ev, fn); }
+  function trim(s) { return String(s == null ? "" : s).replace(/^\s+|\s+$/g, ""); }
+  function pad(n, w) { n = String(n); while (n.length < w) n = "0" + n; return n; }
+  function esc(s) { return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  function setText(id, t) { var el = $(id); if ("textContent" in el) el.textContent = t; else el.innerText = t; }
+  function dash(s) { return trim(s) ? s : "-"; }
 
-  let reg = load(KEY, []);
-  let settings = load(KEY_SET, {kota:"Denpasar", alamat:"", logo:""});
-  let editingId = null;
-  let isExample = false;
+  /* Penyimpanan: localStorage bila tersedia (IE11 butuh dibuka lewat http, bukan file://) */
+  var store = null;
+  try { if (window.localStorage) { window.localStorage.setItem("__t", "1"); window.localStorage.removeItem("__t"); store = window.localStorage; } } catch (e) { store = null; }
+  function load(k, d) { if (!store) return d; try { var v = store.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+  function save(k, v) { if (!store) return false; try { store.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } }
 
-  // ---- sample type inputs
-  const typesBox = $("types");
-  JENIS.forEach(j=>{
-    const id = j.toLowerCase();
-    const el = document.createElement("label");
-    el.className = "type"; el.htmlFor = "cb-"+id;
-    el.innerHTML = `<input type="checkbox" id="cb-${id}" data-j="${j}"><span>${j}</span>
-      <input type="number" id="q-${id}" min="1" step="1" placeholder="Jumlah" disabled aria-label="Jumlah sampel ${j}">`;
-    typesBox.appendChild(el);
-    const cb = el.querySelector("input[type=checkbox]"), q = el.querySelector("input[type=number]");
-    cb.addEventListener("change",()=>{q.disabled=!cb.checked; el.classList.toggle("on",cb.checked);
-      if(cb.checked && !q.value){q.value=1} if(cb.checked) q.focus(); render();});
-    q.addEventListener("input",render);
-  });
+  var reg = load(KEY, []);
+  var set = load(KEY_SET, { kota: "Denpasar", alamat: "", logo: "" });
+  var editId = null, contoh = false;
 
-  function getSampel(){
-    return JENIS.map(j=>{const id=j.toLowerCase();return {jenis:j,on:$("cb-"+id).checked,jumlah:parseInt($("q-"+id).value,10)||0}})
-      .filter(s=>s.on && s.jumlah>0).map(({jenis,jumlah})=>({jenis,jumlah}));
+  /* Tanggal: disimpan sebagai yyyy-mm-dd, diketik sebagai hh/bb/tttt */
+  function toISO(s) {
+    var m = /^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/.exec(trim(s));
+    if (!m) return "";
+    var d = +m[1], b = +m[2], y = +m[3];
+    var t = new Date(y, b - 1, d);
+    if (t.getFullYear() !== y || t.getMonth() !== b - 1 || t.getDate() !== d) return "";
+    return y + "-" + pad(b, 2) + "-" + pad(d, 2);
   }
-  function setSampel(list){
-    JENIS.forEach(j=>{const id=j.toLowerCase(),f=list.find(s=>s.jenis===j);
-      $("cb-"+id).checked=!!f; $("q-"+id).disabled=!f; $("q-"+id).value=f?f.jumlah:"";
-      $("cb-"+id).closest(".type").classList.toggle("on",!!f);});
+  function fromISO(s) { var p = String(s || "").split("-"); return p.length === 3 ? p[2] + "/" + p[1] + "/" + p[0] : ""; }
+  function tglPanjang(iso) { if (!iso) return ""; var p = iso.split("-"); return (+p[2]) + " " + BULAN[+p[1] - 1] + " " + p[0]; }
+  function hariIni() { var d = new Date(); return pad(d.getDate(), 2) + "/" + pad(d.getMonth() + 1, 2) + "/" + d.getFullYear(); }
+
+  /* Tabel jenis sampel */
+  var tbl = $("tblJenis"), i;
+  for (i = 0; i < JENIS.length; i++) {
+    var tr = tbl.insertRow(-1), id = JENIS[i].toLowerCase();
+    tr.id = "tr-" + id;
+    tr.insertCell(-1).className = "cek";
+    tr.cells[0].innerHTML = '<input type="checkbox" id="cb-' + id + '">';
+    tr.insertCell(-1).innerHTML = '<label for="cb-' + id + '">' + JENIS[i] + '</label>';
+    tr.insertCell(-1).className = "jml";
+    tr.cells[2].innerHTML = '<input type="text" class="num" id="q-' + id + '" placeholder="Jumlah" disabled>';
+    (function (id) {
+      on($("cb-" + id), "click", function () {
+        var c = $("cb-" + id).checked, q = $("q-" + id);
+        q.disabled = !c; $("tr-" + id).className = c ? "on" : "";
+        if (c && !q.value) q.value = "1";
+        if (c) q.focus();
+        ubah();
+      });
+      on($("q-" + id), "keyup", ubah);
+      on($("q-" + id), "change", ubah);
+    })(id);
   }
 
-  // ---- numbering: 001/LTL-FP/X/2026
-  function nextNomor(dateStr){
-    const d = dateStr? new Date(dateStr+"T00:00:00") : new Date();
-    const y = d.getFullYear();
-    const n = reg.filter(r=>r.tahun===y).reduce((m,r)=>Math.max(m,r.urut),0)+1;
-    return {urut:n, tahun:y, nomor:`${String(n).padStart(3,"0")}/LTL-FP/${BULAN_ROM[d.getMonth()]}/${y}`};
+  function ambilSampel() {
+    var out = [], j, id, n;
+    for (j = 0; j < JENIS.length; j++) {
+      id = JENIS[j].toLowerCase();
+      n = parseInt($("q-" + id).value, 10);
+      if ($("cb-" + id).checked && n > 0) out.push({ jenis: JENIS[j], jumlah: n });
+    }
+    return out;
   }
-  const fmtTgl = s => { if(!s) return ""; const d=new Date(s+"T00:00:00"); return `${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`; };
-  const today = ()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
-  const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  const dash = s => s && String(s).trim() ? s : "-";
-
-  // ---- live receipt
-  function render(){
-    const sampel = getSampel();
-    const total = sampel.reduce((a,s)=>a+s.jumlah,0);
-    $("total").textContent = total;
-    if(!editingId){ $("nomor").value = nextNomor($("tanggal").value).nomor; }
-    $("p-nomor").textContent = $("nomor").value;
-    $("p-nama").textContent = dash($("nama").value);
-    $("p-instansi").textContent = dash($("instansi").value);
-    $("p-hp").textContent = dash($("hp").value);
-    $("p-lokasi").textContent = dash($("lokasi").value);
-    $("p-tanggal").textContent = dash(fmtTgl($("tanggal").value));
-    $("p-parameter").textContent = dash($("parameter").value);
-    $("p-rows").innerHTML = sampel.length
-      ? sampel.map((s,i)=>`<tr><td class="n">${i+1}</td><td>${esc(s.jenis)}</td><td class="q">${s.jumlah} sampel</td></tr>`).join("")
-      : `<tr class="empty"><td class="n">-</td><td>Belum ada jenis sampel dipilih</td><td class="q">-</td></tr>`;
-    $("p-total").textContent = total + " sampel";
-    const cat = $("catatan").value.trim();
-    $("p-catatan").textContent = cat ? "Catatan: "+cat : "";
-    $("s-pengirim").textContent = $("nama").value || "(.............................)";
-    $("s-petugas").textContent = $("petugas").value || "(.............................)";
-    $("s-tgl").textContent = `${settings.kota||""}${settings.kota?", ":""}${fmtTgl($("tanggal").value)||"..............."}`;
-    $("p-alamat").textContent = settings.alamat || "";
-    const lg = $("logo");
-    if(settings.logo){ lg.innerHTML = `<img alt="Logo" src="${settings.logo}">`; lg.classList.add("has"); }
-    else { lg.innerHTML = "Logo<br>Unud"; lg.classList.remove("has"); }
+  function isiSampel(list) {
+    var j, k, id, f;
+    for (j = 0; j < JENIS.length; j++) {
+      id = JENIS[j].toLowerCase(); f = null;
+      for (k = 0; k < list.length; k++) if (list[k].jenis === JENIS[j]) f = list[k];
+      $("cb-" + id).checked = !!f; $("q-" + id).disabled = !f; $("q-" + id).value = f ? f.jumlah : "";
+      $("tr-" + id).className = f ? "on" : "";
+    }
   }
-  ["nama","instansi","hp","lokasi","tanggal","parameter","petugas","catatan"].forEach(id=>$(id).addEventListener("input",()=>{ if(isExample) clearExampleFlag(); render(); }));
 
-  // ---- settings
-  $("alamat").value = settings.alamat||""; $("kota").value = settings.kota||"";
-  $("alamat").addEventListener("input",e=>{settings.alamat=e.target.value;save(KEY_SET,settings);render()});
-  $("kota").addEventListener("input",e=>{settings.kota=e.target.value;save(KEY_SET,settings);render()});
-  $("logo-in").addEventListener("change",e=>{
-    const f=e.target.files[0]; if(!f) return;
-    const r=new FileReader(); r.onload=()=>{settings.logo=r.result; if(!save(KEY_SET,settings)) msg("Logo tampil, tetapi terlalu besar untuk disimpan. Gunakan file di bawah 1 MB.","err"); render();};
+  /* Nomor: 001/LTL-FP/X/2026 */
+  function nomorBaru(iso) {
+    var d = iso ? new Date(+iso.substr(0, 4), +iso.substr(5, 2) - 1, 1) : new Date();
+    var y = d.getFullYear(), n = 0, j;
+    for (j = 0; j < reg.length; j++) if (reg[j].tahun === y && reg[j].urut > n) n = reg[j].urut;
+    n++;
+    return { urut: n, tahun: y, nomor: pad(n, 3) + "/LTL-FP/" + ROMAWI[d.getMonth()] + "/" + y };
+  }
+
+  function cariId(id) { for (var j = 0; j < reg.length; j++) if (reg[j].id === id) return j; return -1; }
+
+  /* Pratinjau tanda terima */
+  function ubah() {
+    if (contoh) { contoh = false; $("flagContoh").style.display = "none"; }
+    tampil();
+  }
+  function tampil() {
+    var s = ambilSampel(), tot = 0, j, html = "", iso = toISO($("tanggal").value);
+    for (j = 0; j < s.length; j++) {
+      tot += s[j].jumlah;
+      html += '<tr><td class="c">' + (j + 1) + '</td><td>' + esc(s[j].jenis) + '</td><td class="c">' + s[j].jumlah + ' sampel</td></tr>';
+    }
+    if (!s.length) html = '<tr><td class="c">-</td><td><i>Belum ada jenis sampel dipilih</i></td><td class="c">-</td></tr>';
+    setText("total", tot);
+    if (!editId) $("nomor").value = nomorBaru(iso).nomor;
+    setText("pNomor", $("nomor").value);
+    setText("pNama", dash($("nama").value));
+    setText("pInstansi", dash($("instansi").value));
+    setText("pHp", dash($("hp").value));
+    setText("pLokasi", dash($("lokasi").value));
+    setText("pTanggal", dash(tglPanjang(iso)));
+    setText("pParameter", dash($("parameter").value));
+    /* IE tidak mengizinkan innerHTML pada tbody: bangun ulang lewat tabel sementara */
+    var tb = $("pRows"), tmp = document.createElement("div");
+    tmp.innerHTML = "<table><tbody>" + html + "</tbody></table>";
+    while (tb.firstChild) tb.removeChild(tb.firstChild);
+    var src = tmp.getElementsByTagName("tbody")[0];
+    while (src.firstChild) tb.appendChild(src.firstChild);
+    setText("pTotal", tot + " sampel");
+    setText("pCatatan", trim($("catatan").value) ? "Catatan: " + trim($("catatan").value) : "");
+    setText("sPengirim", trim($("nama").value) || "(.............................)");
+    setText("sPetugas", trim($("petugas").value) || "(.............................)");
+    setText("sTgl", (set.kota ? set.kota + ", " : "") + (tglPanjang(iso) || "..............."));
+    setText("pAlamat", set.alamat || "");
+    var lg = $("logo");
+    if (set.logo) { lg.innerHTML = '<img alt="Logo" src="' + set.logo + '">'; lg.className = "logo ada"; }
+    else { lg.innerHTML = "Logo Unud"; lg.className = "logo"; }
+  }
+  for (i = 0; i < FIELDS.length; i++) { on($(FIELDS[i]), "keyup", ubah); on($(FIELDS[i]), "change", ubah); }
+
+  function pesan(t, c) { setText("msg", t); $("msg").className = "msg " + (c || ""); }
+
+  /* Pengaturan */
+  $("alamat").value = set.alamat || ""; $("kota").value = set.kota || "";
+  on($("alamat"), "keyup", function () { set.alamat = $("alamat").value; save(KEY_SET, set); tampil(); });
+  on($("kota"), "keyup", function () { set.kota = $("kota").value; save(KEY_SET, set); tampil(); });
+  on($("logoIn"), "change", function () {
+    var f = $("logoIn").files && $("logoIn").files[0];
+    if (!f || !window.FileReader) return;
+    var r = new FileReader();
+    r.onload = function () { set.logo = r.result; if (!save(KEY_SET, set)) pesan("Logo tampil, tetapi terlalu besar untuk disimpan. Pakai file di bawah 500 KB.", "err"); tampil(); };
     r.readAsDataURL(f);
   });
 
-  function msg(t,cls){ const m=$("msg"); m.textContent=t; m.className="msg "+(cls||""); }
-  function clearExampleFlag(){ isExample=false; const f=document.querySelector(".example-flag"); if(f) f.remove(); }
-
-  // ---- form actions
-  function resetForm(){
-    editingId=null; clearExampleFlag();
-    ["nama","instansi","hp","lokasi","parameter","catatan"].forEach(id=>$(id).value="");
-    $("tanggal").value = today(); setSampel([]); msg(""); $("btn-save").textContent="Simpan ke register"; render();
+  /* Tombol formulir */
+  function baru() {
+    editId = null; contoh = false; $("flagContoh").style.display = "none";
+    var k = ["nama","instansi","hp","lokasi","parameter","catatan"];
+    for (var j = 0; j < k.length; j++) $(k[j]).value = "";
+    $("tanggal").value = hariIni(); isiSampel([]); pesan(""); $("bSimpan").innerHTML = "Simpan ke register"; tampil();
   }
-  $("btn-new").addEventListener("click",resetForm);
+  on($("bBaru"), "click", baru);
 
-  $("f").addEventListener("submit",e=>{
-    e.preventDefault();
-    const sampel = getSampel();
-    const miss = [];
-    if(!$("nama").value.trim()) miss.push("nama pengirim");
-    if(!sampel.length) miss.push("jenis & banyaknya sampel");
-    if(!$("lokasi").value.trim()) miss.push("lokasi sampel");
-    if(!$("tanggal").value) miss.push("tanggal taruh sampel");
-    if(miss.length){ msg("Lengkapi dulu: "+miss.join(", ")+".","err"); return; }
-    const data = {nama:$("nama").value.trim(),instansi:$("instansi").value.trim(),hp:$("hp").value.trim(),
-      lokasi:$("lokasi").value.trim(),tanggal:$("tanggal").value,parameter:$("parameter").value.trim(),
-      petugas:$("petugas").value.trim(),catatan:$("catatan").value.trim(),sampel,
-      total:sampel.reduce((a,s)=>a+s.jumlah,0)};
-    if(editingId){
-      const i=reg.findIndex(r=>r.id===editingId); reg[i]={...reg[i],...data};
+  on($("bSimpan"), "click", function () {
+    var s = ambilSampel(), iso = toISO($("tanggal").value), kurang = [];
+    if (!trim($("nama").value)) kurang.push("nama pengirim");
+    if (!s.length) kurang.push("jenis & banyaknya sampel");
+    if (!trim($("lokasi").value)) kurang.push("lokasi sampel");
+    if (!iso) kurang.push("tanggal taruh sampel (format hh/bb/tttt)");
+    if (kurang.length) { pesan("Lengkapi dulu: " + kurang.join(", ") + ".", "err"); return; }
+    var tot = 0, j;
+    for (j = 0; j < s.length; j++) tot += s[j].jumlah;
+    var d = { nama: trim($("nama").value), instansi: trim($("instansi").value), hp: trim($("hp").value),
+      lokasi: trim($("lokasi").value), tanggal: iso, parameter: trim($("parameter").value),
+      petugas: trim($("petugas").value), catatan: trim($("catatan").value), sampel: s, total: tot };
+    var k;
+    if (editId) {
+      var idx = cariId(editId);
+      for (k in d) if (d.hasOwnProperty(k)) reg[idx][k] = d[k];
     } else {
-      const n=nextNomor(data.tanggal);
-      reg.push({id:Date.now().toString(36),...n,...data,dibuat:new Date().toISOString()});
-      $("nomor").value=n.nomor;
+      var n = nomorBaru(iso);
+      d.id = new Date().getTime().toString(36); d.urut = n.urut; d.tahun = n.tahun; d.nomor = n.nomor;
+      d.dibuat = new Date().getTime();
+      reg.push(d); editId = d.id; $("nomor").value = n.nomor;
     }
-    const ok = save(KEY,reg);
-    const nomor = $("nomor").value;
-    editingId = reg.find(r=>r.nomor===nomor)?.id || null;
-    $("btn-save").textContent="Simpan perubahan";
-    clearExampleFlag(); renderReg(); render();
-    msg(ok? `Tersimpan sebagai ${nomor}.` : `Tercatat sebagai ${nomor}, tetapi browser ini menolak penyimpanan permanen.`, ok?"ok":"err");
+    var ok = save(KEY, reg);
+    $("bSimpan").innerHTML = "Simpan perubahan";
+    contoh = false; $("flagContoh").style.display = "none";
+    tampilReg(); tampil();
+    pesan(ok ? "Tersimpan sebagai " + $("nomor").value + "." :
+      "Tercatat sebagai " + $("nomor").value + ", tetapi browser ini tidak bisa menyimpan permanen. Buka lewat Chrome/Firefox atau alamat web.", ok ? "ok" : "err");
   });
 
-  if(!inFrame){ $("btn-print").hidden=false; $("btn-print").addEventListener("click",()=>window.print()); $("btn-dl").hidden=false; }
+  on($("bCetak"), "click", function () { window.print(); });
 
-  // ---- register
-  function renderReg(){
-    const q = $("cari").value.trim().toLowerCase();
-    const rows = reg.slice().reverse().filter(r=>!q || [r.nomor,r.nama,r.lokasi,r.instansi,(r.sampel||[]).map(s=>s.jenis).join(" ")].join(" ").toLowerCase().includes(q));
-    $("reg-body").innerHTML = rows.map(r=>`<tr>
-      <td class="mono">${esc(r.nomor)}</td><td style="white-space:nowrap">${esc(fmtTgl(r.tanggal))}</td>
-      <td>${esc(r.nama)}${r.instansi?`<br><small style="color:var(--muted)">${esc(r.instansi)}</small>`:""}</td>
-      <td>${(r.sampel||[]).map(s=>`<span class="pill">${esc(s.jenis)} ${s.jumlah}</span>`).join("")}</td>
-      <td class="mono">${r.total}</td><td style="min-width:180px">${esc(r.lokasi)}</td>
-      <td style="white-space:nowrap"><button class="link" data-open="${r.id}">Buka</button><button class="link del" data-del="${r.id}">Hapus</button></td></tr>`).join("");
-    $("reg-empty").hidden = rows.length>0;
-    if(!reg.length) $("reg-empty").innerHTML = "Belum ada sampel tercatat. Isi formulir lalu tekan <b>Simpan ke register</b>; datanya muncul di sini.";
-    else if(!rows.length) $("reg-empty").textContent = "Tidak ada data yang cocok dengan pencarian.";
-    $("reg-count").textContent = reg.length? `(${reg.length})` : "";
+  /* Register */
+  function tampilReg() {
+    var q = trim($("cari").value).toLowerCase(), html = "", n = 0, j, k, r, teks, pil;
+    for (j = reg.length - 1; j >= 0; j--) {
+      r = reg[j]; pil = ""; teks = r.nomor + " " + r.nama + " " + r.lokasi + " " + (r.instansi || "");
+      for (k = 0; k < (r.sampel || []).length; k++) { pil += '<span class="pill">' + esc(r.sampel[k].jenis) + " " + r.sampel[k].jumlah + "</span>"; teks += " " + r.sampel[k].jenis; }
+      if (q && teks.toLowerCase().indexOf(q) < 0) continue;
+      n++;
+      html += '<tr><td class="mono">' + esc(r.nomor) + '</td><td style="white-space:nowrap">' + esc(tglPanjang(r.tanggal)) + '</td><td>' + esc(r.nama) +
+        (r.instansi ? '<br><small style="color:#5d6b62">' + esc(r.instansi) + "</small>" : "") + "</td><td>" + pil + '</td><td class="mono">' + r.total +
+        '</td><td>' + esc(r.lokasi) + '</td><td style="white-space:nowrap"><button type="button" class="lnk" data-buka="' + r.id + '">Buka</button>' +
+        '<button type="button" class="lnk del" data-hapus="' + r.id + '">Hapus</button></td></tr>';
+    }
+    var tb = $("regBody"), tmp = document.createElement("div");
+    tmp.innerHTML = "<table><tbody>" + html + "</tbody></table>";
+    while (tb.firstChild) tb.removeChild(tb.firstChild);
+    var src = tmp.getElementsByTagName("tbody")[0];
+    while (src.firstChild) tb.appendChild(src.firstChild);
+    $("regKosong").style.display = n ? "none" : "block";
+    $("regKosong").innerHTML = reg.length ? "Tidak ada data yang cocok dengan pencarian." : "Belum ada sampel tercatat. Isi formulir lalu tekan <b>Simpan ke register</b>.";
+    setText("regCount", reg.length ? "(" + reg.length + ")" : "");
   }
-  $("cari").addEventListener("input",renderReg);
-  $("reg-body").addEventListener("click",e=>{
-    const o=e.target.dataset.open, d=e.target.dataset.del;
-    if(o){ const r=reg.find(x=>x.id===o); if(!r) return; clearExampleFlag(); editingId=r.id;
-      ["nama","instansi","hp","lokasi","tanggal","parameter","petugas","catatan"].forEach(k=>$(k).value=r[k]||"");
-      $("nomor").value=r.nomor; setSampel(r.sampel||[]); $("btn-save").textContent="Simpan perubahan"; msg("Membuka "+r.nomor+".","ok"); render(); show("form"); }
-    if(d){ const r=reg.find(x=>x.id===d); if(!r) return;
-      $("confirm-box").innerHTML=`<div class="confirm"><span>Hapus <b>${esc(r.nomor)}</b> (${esc(r.nama)}) dari register?</span>
-        <button class="btn" style="background:var(--warn);border-color:var(--warn)" id="yes-del">Ya, hapus</button><button class="btn plain" id="no-del">Batal</button></div>`;
-      $("yes-del").onclick=()=>{reg=reg.filter(x=>x.id!==d); save(KEY,reg); if(editingId===d) resetForm(); $("confirm-box").innerHTML=""; renderReg();};
-      $("no-del").onclick=()=>{$("confirm-box").innerHTML=""};
+  on($("cari"), "keyup", tampilReg);
+
+  on($("regBody"), "click", function (e) {
+    e = e || window.event; var t = e.target || e.srcElement;
+    var buka = t.getAttribute("data-buka"), hapus = t.getAttribute("data-hapus"), idx, r, j;
+    if (buka) {
+      idx = cariId(buka); if (idx < 0) return; r = reg[idx];
+      contoh = false; $("flagContoh").style.display = "none"; editId = r.id;
+      for (j = 0; j < FIELDS.length; j++) $(FIELDS[j]).value = r[FIELDS[j]] || "";
+      $("tanggal").value = fromISO(r.tanggal); $("nomor").value = r.nomor; isiSampel(r.sampel || []);
+      $("bSimpan").innerHTML = "Simpan perubahan"; pesan("Membuka " + r.nomor + ".", "ok"); tampil(); lihat("form");
+    }
+    if (hapus) {
+      idx = cariId(hapus); if (idx < 0) return; r = reg[idx];
+      $("konfirm").innerHTML = '<div class="konfirm">Hapus <b>' + esc(r.nomor) + "</b> (" + esc(r.nama) + ') dari register? ' +
+        '<button type="button" class="btn red" id="ya">Ya, hapus</button><button type="button" class="btn grey" id="batal">Batal</button></div>';
+      on($("ya"), "click", function () { reg.splice(cariId(hapus), 1); save(KEY, reg); if (editId === hapus) baru(); $("konfirm").innerHTML = ""; tampilReg(); });
+      on($("batal"), "click", function () { $("konfirm").innerHTML = ""; });
     }
   });
 
-  function toCSV(){
-    const head=["Nomor","Tanggal Taruh","Nama Pengirim","Instansi/NIM","No HP",...JENIS,"Total Sampel","Lokasi","Parameter","Petugas","Catatan"];
-    const q=v=>`"${String(v??"").replace(/"/g,'""')}"`;
-    const lines=reg.map(r=>[r.nomor,r.tanggal,r.nama,r.instansi,r.hp,...JENIS.map(j=>(r.sampel||[]).find(s=>s.jenis===j)?.jumlah||""),r.total,r.lokasi,r.parameter,r.petugas,r.catatan].map(q).join(";"));
-    return [head.map(q).join(";"),...lines].join("\r\n");
+  function csv() {
+    function q(v) { return '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"'; }
+    var head = ["Nomor","Tanggal Taruh","Nama Pengirim","Instansi/NIM","No HP"].concat(JENIS).concat(["Total Sampel","Lokasi","Parameter","Petugas","Catatan"]);
+    var rows = [], j, k, m, r, line;
+    for (k = 0; k < head.length; k++) head[k] = q(head[k]);
+    rows.push(head.join(";"));
+    for (j = 0; j < reg.length; j++) {
+      r = reg[j]; line = [r.nomor, fromISO(r.tanggal), r.nama, r.instansi, r.hp];
+      for (k = 0; k < JENIS.length; k++) { var v = ""; for (m = 0; m < (r.sampel || []).length; m++) if (r.sampel[m].jenis === JENIS[k]) v = r.sampel[m].jumlah; line.push(v); }
+      line = line.concat([r.total, r.lokasi, r.parameter, r.petugas, r.catatan]);
+      for (k = 0; k < line.length; k++) line[k] = q(line[k]);
+      rows.push(line.join(";"));
+    }
+    return rows.join("\r\n");
   }
-  $("btn-csv").addEventListener("click",()=>{
-    const t=toCSV(), out=$("csv-out");
-    const fallback=()=>{out.hidden=false; out.value=t; out.focus(); out.select(); $("btn-csv").textContent="Teks CSV terpilih, tekan Ctrl+C";};
-    try{ navigator.clipboard.writeText(t).then(()=>{$("btn-csv").textContent="CSV tersalin"; setTimeout(()=>$("btn-csv").textContent="Salin CSV (untuk Excel)",2000)},fallback); }catch(e){fallback()}
-  });
-  $("btn-dl").addEventListener("click",()=>{
-    const b=new Blob(["﻿"+toCSV()],{type:"text/csv;charset=utf-8"}); const a=document.createElement("a");
-    a.href=URL.createObjectURL(b); a.download=`register-sampel-${today()}.csv`; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  function teksCSV() { var o = $("csvOut"); o.style.display = "block"; o.value = csv(); o.focus(); o.select(); }
+  on($("bTeks"), "click", teksCSV);
+  on($("bUnduh"), "click", function () {
+    var t = "﻿" + csv(), nama = "register-sampel-" + toISO(hariIni()) + ".csv";
+    try {
+      var b = new Blob([t], { type: "text/csv;charset=utf-8" });
+      if (window.navigator.msSaveOrOpenBlob) { window.navigator.msSaveOrOpenBlob(b, nama); return; } /* IE11 */
+      var a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = nama;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    } catch (e) { teksCSV(); }
   });
 
-  // ---- tabs
-  function show(v){
-    $("view-form").hidden = v!=="form"; $("view-register").hidden = v!=="register";
-    $("tab-form").setAttribute("aria-selected",v==="form"); $("tab-register").setAttribute("aria-selected",v==="register");
+  /* Tab */
+  function lihat(v) {
+    $("vForm").style.display = v === "form" ? "" : "none";
+    $("vReg").style.display = v === "reg" ? "" : "none";
+    $("tabForm").className = v === "form" ? "on" : ""; $("tabReg").className = v === "reg" ? "on" : "";
   }
-  $("tab-form").onclick=()=>show("form"); $("tab-register").onclick=()=>show("register");
-  if(location.hash==="#register") show("register");
+  on($("tabForm"), "click", function () { lihat("form"); });
+  on($("tabReg"), "click", function () { lihat("reg"); });
 
-  // ---- initial state: example filled in, clearly marked
-  $("tanggal").value = today();
-  if(!reg.length){
-    isExample=true;
-    $("nama").value="I Made Contoh"; $("instansi").value="Prodi Agroekoteknologi"; $("hp").value="0812-xxxx-xxxx";
-    $("lokasi").value="Desa Pancasari, Kec. Sukasada, Kab. Buleleng"; $("parameter").value="pH, C-organik, N-total, P, K";
-    $("catatan").value="Tanah kering angin, kemasan plastik ±1 kg";
-    setSampel([{jenis:"Tanah",jumlah:5},{jenis:"Kompos",jumlah:2}]);
-    const flag=document.createElement("div"); flag.className="example-flag"; flag.textContent="Contoh pengisian, tekan Formulir baru untuk mulai";
-    $("f").insertBefore(flag,$("f").children[1]);
-  }
-  render(); renderReg();
+  if (!store) setText("ketSimpan", "Peringatan: browser ini tidak mengizinkan penyimpanan. Di Internet Explorer, buka lewat alamat web (GitHub Pages) atau gunakan Chrome/Firefox.");
+
+  /* Keadaan awal */
+  $("tanggal").value = hariIni();
+  if (!reg.length) {
+    contoh = true;
+    $("nama").value = "I Made Contoh"; $("instansi").value = "Prodi Agroekoteknologi"; $("hp").value = "0812-xxxx-xxxx";
+    $("lokasi").value = "Desa Pancasari, Kec. Sukasada, Kab. Buleleng"; $("parameter").value = "pH, C-organik, N-total, P, K";
+    $("catatan").value = "Tanah kering angin, kemasan plastik 1 kg";
+    isiSampel([{ jenis: "Tanah", jumlah: 5 }, { jenis: "Kompos", jumlah: 2 }]);
+  } else { $("flagContoh").style.display = "none"; }
+  tampil(); tampilReg();
 })();
 </script>
 </body>
