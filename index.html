@@ -406,10 +406,10 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
         q.disabled = !c; $("tr-" + id).className = c ? "on" : "";
         if (c && !q.value) q.value = "1";
         if (c) q.focus();
-        ubah();
+        sinkron(); ubah();
       });
-      on($("q-" + id), "keyup", ubah);
-      on($("q-" + id), "change", ubah);
+      on($("q-" + id), "keyup", function () { sinkron(); ubah(); });
+      on($("q-" + id), "change", function () { sinkron(); ubah(); });
     })(id);
   }
   function ambilSampel() {
@@ -429,10 +429,23 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
       $("tr-" + id).className = f ? "on" : "";
     }
   }
+  /* Jumlah sampel untuk analisis: jaringan mengikuti sampel Tanaman,
+     analisis tanah mengikuti Tanah + Pupuk + Kompos + POC + Air.
+     Bila jenis yang sesuai tidak ada, dipakai total semua sampel. */
   function jumlahJenis(nama) {
-    var s = ambilSampel(), j, tot = 0;
-    for (j = 0; j < s.length; j++) { if (s[j].jenis === nama) return s[j].jumlah; tot += s[j].jumlah; }
-    return tot || 1;
+    var s = ambilSampel(), j, cocok = 0, tot = 0;
+    for (j = 0; j < s.length; j++) {
+      tot += s[j].jumlah;
+      if (nama === "Tanaman" ? s[j].jenis === "Tanaman" : s[j].jenis !== "Tanaman") cocok += s[j].jumlah;
+    }
+    return cocok || tot;
+  }
+  /* Samakan jumlah semua analisis tercentang dengan jenis & banyaknya sampel */
+  function sinkron() {
+    for (var kode in IDX) if (IDX.hasOwnProperty(kode) && $("ac-" + kode).checked) {
+      var n = jumlahJenis(IDX[kode].grup.sampel);
+      $("aq-" + kode).value = n ? n : "";
+    }
   }
 
   /* ===== Kategori ===== */
@@ -466,7 +479,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
     var cb = $("ac-" + kode), q = $("aq-" + kode);
     cb.checked = nyala; q.disabled = !nyala;
     $("ar-" + kode).className = nyala ? "on" : "";
-    if (nyala) q.value = qty != null ? qty : (q.value || jumlahJenis(IDX[kode].grup.sampel));
+    if (nyala) q.value = qty != null ? qty : (jumlahJenis(IDX[kode].grup.sampel) || "");
     else q.value = "";
   }
   for (k in IDX) if (IDX.hasOwnProperty(k)) (function (kode) {
