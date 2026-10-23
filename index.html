@@ -188,7 +188,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
           <div class="pengerja" id="pengerjaBox" style="display:none">
             <span class="plbl">Analisis dikerjakan oleh:</span>
             <label><input type="radio" name="pengerja" id="pj-laboran" value="laboran"> Laboran &ndash; dibayar sesuai harga kategori A</label>
-            <label><input type="radio" name="pengerja" id="pj-mahasiswa" value="mahasiswa"> Mahasiswa sendiri &ndash; potongan 60% dari harga total</label>
+            <label><input type="radio" name="pengerja" id="pj-mahasiswa" value="mahasiswa"> Mahasiswa sendiri &ndash; potongan 40% dari harga total</label>
           </div>
           <label><input type="radio" name="kat" id="kat-B" value="B"> <b>B</b> &ndash; Mahasiswa &amp; Dosen S1, S2, S3 di luar Konsentrasi Tanah &amp; Lingkungan</label>
           <label><input type="radio" name="kat" id="kat-C" value="C"> <b>C</b> &ndash; Umum</label>
@@ -203,7 +203,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
         </div>
         <div class="potinfo" id="potInfo" style="display:none">
           <div>Harga total kategori A <span>Rp <span id="fHarga">0</span></span></div>
-          <div>Potongan 60% (dikerjakan mahasiswa) <span>&minus; Rp <span id="fPot">0</span></span></div>
+          <div>Potongan 40% (dikerjakan mahasiswa) <span>&minus; Rp <span id="fPot">0</span></span></div>
         </div>
         <div class="total biaya"><span id="lblBiaya">Total biaya analisis</span> <span>Rp <span id="totBiaya">0</span></span></div>
 
@@ -262,12 +262,12 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
           <tbody id="pBiaya"></tbody>
           <tfoot>
             <tr><th colspan="4" style="text-align:right">Total biaya</th><th class="rr" id="pTotBiaya"></th></tr>
-            <tr id="trPot" style="display:none"><th colspan="4" style="text-align:right">Potongan 60% (dikerjakan mahasiswa)</th><th class="rr" id="pPot"></th></tr>
+            <tr id="trPot" style="display:none"><th colspan="4" style="text-align:right">Potongan 40% (dikerjakan mahasiswa)</th><th class="rr" id="pPot"></th></tr>
             <tr id="trBayar" style="display:none"><th colspan="4" style="text-align:right">Total dibayar</th><th class="rr" id="pBayar"></th></tr>
           </tfoot>
         </table>
         <p class="cat" id="pTerbilang"></p>
-        <p class="ketmhs" id="pKetMhs" style="display:none"><b>Keterangan:</b> Analisis dikerjakan sendiri oleh mahasiswa (kategori A) di bawah pengawasan laboran. Biaya analisis dipotong 60% dari harga total, sehingga yang dibayar adalah 40% dari harga total kategori A.</p>
+        <p class="ketmhs" id="pKetMhs" style="display:none"><b>Keterangan:</b> Analisis dikerjakan sendiri oleh mahasiswa (kategori A) di bawah pengawasan laboran. Biaya analisis dipotong 40% dari harga total, sehingga yang dibayar adalah 60% dari harga total kategori A.</p>
         <p class="cat" id="pCatatan"></p>
 
         <table class="ttd"><tr>
@@ -480,8 +480,8 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
     for (j = 0; j < 3; j++) { $("kat-" + l[j]).checked = (l[j] === c); $("kat-" + l[j]).parentNode.className = l[j] === c ? "on" : ""; }
     $("pengerjaBox").style.display = c === "A" ? "" : "none";
   }
-  /* Pengecualian kategori A: dikerjakan laboran (harga penuh) atau mahasiswa (potongan 60%) */
-  var POTONGAN_MHS = 0.6;
+  /* Pengecualian kategori A: dikerjakan laboran (harga penuh) atau mahasiswa (potongan 40%) */
+  var POTONGAN_MHS = 0.4;
   function pengerja() { return kategori() === "A" ? ($("pj-mahasiswa").checked ? "mahasiswa" : "laboran") : ""; }
   function setPengerja(v) {
     $("pj-mahasiswa").checked = v === "mahasiswa"; $("pj-laboran").checked = v !== "mahasiswa";
@@ -598,7 +598,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
     var pj = pengerja(), byr = hitungBayar(biaya, pj), mhs = pj === "mahasiswa";
     setText("fHarga", rp(biaya)); setText("fPot", rp(byr.potongan));
     $("potInfo").style.display = mhs ? "" : "none";
-    setText("lblBiaya", mhs ? "Total dibayar (40%)" : "Total biaya analisis");
+    setText("lblBiaya", mhs ? "Total dibayar (60%)" : "Total biaya analisis");
     setText("totBiaya", rp(byr.dibayar));
     setText("pTotBiaya", kat ? rp(biaya) : "Pilih kategori");
     setText("pPot", "- " + rp(byr.potongan)); setText("pBayar", rp(byr.dibayar));
@@ -697,7 +697,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
       n++;
       h += '<tr><td class="mono">' + esc(r.nomor) + '</td><td style="white-space:nowrap">' + esc(tglPanjang(r.tanggal)) + '</td><td>' + esc(r.nama) +
         (r.instansi ? '<br><small style="color:#5d6b62">' + esc(r.instansi) + "</small>" : "") + "</td><td>" + pil + '</td><td class="mono">' + r.total +
-        '</td><td>' + esc(r.kategori || "-") + (r.pengerja === "mahasiswa" ? '<br><small style="color:#5d6b62">Mhs -60%</small>' : "") +
+        '</td><td>' + esc(r.kategori || "-") + (r.pengerja === "mahasiswa" ? '<br><small style="color:#5d6b62">Mhs -40%</small>' : "") +
         '</td><td class="mono" style="text-align:right">' + (r.biaya != null ? rp(r.dibayar != null ? r.dibayar : r.biaya) : "-") +
         '</td><td>' + esc(r.lokasi) + '</td><td style="white-space:nowrap"><button type="button" class="lnk" data-buka="' + r.id + '">Buka</button>' +
         '<button type="button" class="lnk del" data-hapus="' + r.id + '">Hapus</button></td></tr>';
