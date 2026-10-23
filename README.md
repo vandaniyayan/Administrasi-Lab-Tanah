@@ -15,6 +15,10 @@ Biaya analisis: kategori pemohon A/B/C (Rincian Biaya Analisis Tanah 2022) dan d
 centang 31 analisis tanah + 4 analisis jaringan tanaman. Harga, subtotal, total, dan terbilang
 dihitung otomatis dan tercetak di tanda terima. Tarif ada di variabel `ANALISIS` dalam `index.html`.
 
+Pengecualian kategori A: pilih "Dikerjakan oleh". Laboran = harga penuh kategori A.
+Mahasiswa sendiri = potongan 60% dari harga total (dibayar 40%); potongan, total dibayar, dan
+keterangannya hanya muncul di tanda terima bila dikerjakan mahasiswa.
+
 Tambahan: nomor registrasi otomatis (`001/LTL-FP/X/2026`), tanda terima siap cetak A4
 dengan kolom tanda tangan, register sampel dengan pencarian, dan ekspor CSV untuk Excel.
 
