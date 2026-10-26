@@ -316,6 +316,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
 
   /* ===== DAFTAR HARGA (Rincian Biaya Analisis Tanah 2022) =====
      Format: [kode, nama analisis, harga A, harga B, harga C]
+     Porositas tanah (t32) ditambahkan Oktober 2026: A 10.000, B 12.500, C 15.000.
      Ubah angka di sini bila tarif diperbarui. */
   var ANALISIS = [
     { grup: "Analisis tanah rutin (No. 1-9)", sampel: "Tanah", paket: true, item: [
@@ -329,12 +330,19 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
       ["t8",  "Kadar air (kap. lapang)",           10000, 12500, 20000],
       ["t9",  "Tekstur 3 fraksi",                  30000, 35000, 40000]
     ]},
-    { grup: "Analisis tanah lainnya (No. 10-31)", sampel: "Tanah", item: [
+    { grup: "Sifat fisik tanah", sampel: "Tanah", item: [
+      ["t14", "Tekstur 3 fraksi + pasir sangat halus", 35000, 40000, 50000],
+      ["t23", "Berat volume",                      12500, 15000, 17500],
+      ["t29", "Berat jenis partikel",              20000, 25000, 30000],
+      ["t32", "Porositas tanah",                   10000, 12500, 15000],
+      ["t24", "Permeabilitas",                     12500, 15000, 17500],
+      ["t28", "Angka Atterberg",                   20000, 25000, 30000]
+    ]},
+    { grup: "Sifat kimia & biologi tanah", sampel: "Tanah", item: [
       ["t10", "P (HCl)",                           30000, 35000, 40000],
       ["t11", "K (HCl)",                           50000, 60000, 60000],
       ["t12", "Fosfat (Olsen)",                    30000, 35000, 40000],
       ["t13", "Kalium (Olsen)",                    50000, 60000, 60000],
-      ["t14", "Tekstur 3 fraksi + pasir sangat halus", 35000, 40000, 50000],
       ["t15", "KTK (Amonium Asetat)",              30000, 40000, 60000],
       ["t16", "KB",                                20000, 25000, 30000],
       ["t17", "K dapat ditukar",                   50000, 55000, 60000],
@@ -343,13 +351,9 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
       ["t20", "Mg dapat ditukar",                  50000, 55000, 60000],
       ["t21", "pH KCl",                            12500, 15000, 30000],
       ["t22", "pH (NaF)",                          20000, 25000, 30000],
-      ["t23", "Berat volume",                      12500, 15000, 17500],
-      ["t24", "Permeabilitas",                     12500, 15000, 17500],
       ["t25", "Al dapat ditukar",                  17500, 20000, 30000],
       ["t26", "P retensi",                         30000, 35000, 40000],
       ["t27", "Al, Fe, Si (Oksalat)",              50000, 55000, 60000],
-      ["t28", "Angka Atterberg",                   20000, 25000, 30000],
-      ["t29", "Berat jenis partikel",              20000, 25000, 30000],
       ["t30", "Respirasi",                         15000, 20000, 25000],
       ["t31", "Total bakteri dan jamur",           50000, 60000, 70000]
     ]},
