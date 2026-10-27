@@ -13,7 +13,8 @@ Fakultas Pertanian, Universitas Udayana.
 
 Biaya analisis: kategori pemohon A/B/C (Rincian Biaya Analisis Tanah 2022) dan daftar
 centang analisis per kelompok: tanah rutin (No. 1-9), sifat fisik tanah (termasuk porositas),
-sifat kimia & biologi tanah, dan jaringan tanaman. Harga, subtotal, total, dan terbilang
+sifat kimia & biologi tanah (termasuk C-Organik Loss on Ignition, khusus kategori C),
+dan jaringan tanaman. Harga, subtotal, total, dan terbilang
 dihitung otomatis dan tercetak di tanda terima. Tarif ada di variabel `ANALISIS` dalam `index.html`.
 
 Pengecualian kategori A: pilih "Dikerjakan oleh". Laboran = harga penuh kategori A.

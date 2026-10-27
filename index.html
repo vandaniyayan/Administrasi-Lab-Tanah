@@ -62,6 +62,8 @@ table.anl .r { text-align: right; white-space: nowrap; }
 table.anl .jm { width: 62px; }
 table.anl td.jm input { width: 52px; font: inherit; padding: 2px 4px; border: 1px solid #b9c6bc; text-align: center; }
 table.anl tr.on td { background: #e3ebe4; }
+table.anl tr.na td { color: #9aa6a0; }
+table.anl tr.na td.r { font-size: 11px; font-style: italic; }
 table.anl tr.grp td { background: #2f5d3a; color: #fff; font-weight: bold; font-size: 12px; padding: 5px 6px; }
 table.anl tr.grp button { float: right; font: 11px Tahoma, Arial, sans-serif; padding: 1px 6px; border: 1px solid #fff; background: #fff; color: #2f5d3a; cursor: pointer; }
 
@@ -317,6 +319,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
   /* ===== DAFTAR HARGA (Rincian Biaya Analisis Tanah 2022) =====
      Format: [kode, nama analisis, harga A, harga B, harga C]
      Porositas tanah (t32) ditambahkan Oktober 2026: A 10.000, B 12.500, C 15.000.
+     Isi null bila analisis tidak tersedia untuk kategori itu, mis. C-Organik LOI (t33) hanya kategori C.
      Ubah angka di sini bila tarif diperbarui. */
   var ANALISIS = [
     { grup: "Analisis tanah rutin (No. 1-9)", sampel: "Tanah", paket: true, item: [
@@ -355,7 +358,8 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
       ["t26", "P retensi",                         30000, 35000, 40000],
       ["t27", "Al, Fe, Si (Oksalat)",              50000, 55000, 60000],
       ["t30", "Respirasi",                         15000, 20000, 25000],
-      ["t31", "Total bakteri dan jamur",           50000, 60000, 70000]
+      ["t31", "Total bakteri dan jamur",           50000, 60000, 70000],
+      ["t33", "C-Organik (Loss on Ignition)",      null,  null,  35000]
     ]},
     { grup: "Jaringan tanaman", sampel: "Tanaman", item: [
       ["j1",  "Persiapan (blender) & destruksi",   15000, 15000, 20000],
@@ -518,6 +522,7 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
   }
   isiTbody($("anlBody"), html);
 
+  function tersedia(it) { var o = [], c = ["A","B","C"], j; for (j = 0; j < 3; j++) if (it[KOL[c[j]]] != null) o.push(c[j]); return o.join("/"); }
   function centang(kode, nyala, qty) {
     var cb = $("ac-" + kode), q = $("aq-" + kode);
     cb.checked = nyala; q.disabled = !nyala;
@@ -586,7 +591,13 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
     var kode, it, q;
     for (kode in IDX) if (IDX.hasOwnProperty(kode)) {
       it = IDX[kode].item;
-      setText("ah-" + kode, kat ? rp(it[KOL[kat]]) : "-");
+      /* harga null = tidak tersedia untuk kategori ini */
+      var na = kat && it[KOL[kat]] == null;
+      if (na && $("ac-" + kode).checked) { centang(kode, false); pesan(it[1] + " hanya tersedia untuk kategori " + tersedia(it) + "; centangnya dilepas.", "err"); }
+      $("ac-" + kode).disabled = na;
+      if (na) $("ar-" + kode).className = "na";
+      else if ($("ar-" + kode).className === "na") $("ar-" + kode).className = "";
+      setText("ah-" + kode, na ? "hanya kat. " + tersedia(it) : (kat ? rp(it[KOL[kat]]) : "-"));
       q = parseInt($("aq-" + kode).value, 10);
       setText("as-" + kode, $("ac-" + kode).checked && kat && q > 0 ? rp(it[KOL[kat]] * q) : "");
     }
