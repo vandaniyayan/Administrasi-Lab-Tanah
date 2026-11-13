@@ -333,6 +333,10 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
       ["t8",  "Kadar air (kap. lapang)",           10000, 12500, 20000],
       ["t9",  "Tekstur 3 fraksi",                  30000, 35000, 40000]
     ]},
+    { grup: "Uji pupuk, kompos & POC", sampel: "Organik", item: [
+      /* Paket rutin No. 1-7 (tanpa kadar air kap. lapang & tekstur 3 fraksi), hanya kategori C */
+      ["o1",  "Paket rutin pupuk/kompos/POC: persiapan, N-total, P, K, C-organik, salinitas, pH", null, null, 250000]
+    ]},
     { grup: "Sifat fisik tanah", sampel: "Tanah", item: [
       ["t14", "Tekstur 3 fraksi + pasir sangat halus", 35000, 40000, 50000],
       ["t23", "Berat volume",                      12500, 15000, 17500],
@@ -463,14 +467,17 @@ textarea.csv { width: 100%; height: 120px; font: 12px Consolas, monospace; margi
     }
   }
   /* Jumlah sampel untuk analisis: jaringan mengikuti sampel Tanaman,
-     analisis tanah mengikuti Tanah + Pupuk + Kompos + POC + Air.
-     Bila jenis yang sesuai tidak ada, dipakai total semua sampel. */
+     paket pupuk/kompos/POC mengikuti Pupuk + Kompos + POC,
+     analisis tanah mengikuti Tanah + Air.
+     Bila jenis yang sesuai tidak ada, dipakai total semua sampel (kecuali paket pupuk). */
   function jumlahJenis(nama) {
-    var s = ambilSampel(), j, cocok = 0, tot = 0;
+    var s = ambilSampel(), j, cocok = 0, tot = 0, jn, org;
     for (j = 0; j < s.length; j++) {
-      tot += s[j].jumlah;
-      if (nama === "Tanaman" ? s[j].jenis === "Tanaman" : s[j].jenis !== "Tanaman") cocok += s[j].jumlah;
+      tot += s[j].jumlah; jn = s[j].jenis;
+      org = jn === "Pupuk" || jn === "Kompos" || jn === "POC";
+      if (nama === "Tanaman" ? jn === "Tanaman" : nama === "Organik" ? org : (jn === "Tanah" || jn === "Air")) cocok += s[j].jumlah;
     }
+    if (nama === "Organik") return cocok;
     return cocok || tot;
   }
   /* Samakan jumlah semua analisis tercentang dengan jenis & banyaknya sampel */
