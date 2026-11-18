@@ -14,7 +14,7 @@ Fakultas Pertanian, Universitas Udayana.
 Biaya analisis: kategori pemohon A/B/C (Rincian Biaya Analisis Tanah 2022) dan daftar
 centang analisis per kelompok: tanah rutin (No. 1-9), uji pupuk/kompos/POC (paket rutin
 No. 1-7 Rp 250.000/sampel, khusus kategori C), sifat fisik tanah (termasuk porositas),
-sifat kimia & biologi tanah (termasuk C-Organik Loss on Ignition, khusus kategori C),
+sifat kimia & biologi tanah (termasuk C/N rasio dan C-Organik Loss on Ignition, khusus kategori C),
 dan jaringan tanaman. Harga, subtotal, total, dan terbilang
 dihitung otomatis dan tercetak di tanda terima. Tarif ada di variabel `ANALISIS` dalam `index.html`.
 
